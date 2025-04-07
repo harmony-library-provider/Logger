@@ -1,0 +1,12 @@
+{
+  "name": "entry",
+  "version": "1.0.0",
+  "description": "it's example of logger",
+  "main": "",
+  "author": "",
+  "license": "",
+  "dependencies": {
+    'logger': "file:../library"
+  }
+}
+
