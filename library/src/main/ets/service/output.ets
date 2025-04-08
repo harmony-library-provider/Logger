@@ -1,12 +1,18 @@
 import { common } from '@kit.AbilityKit';
 import { fileIo } from '@kit.CoreFileKit';
-import { request } from '@kit.BasicServicesKit';
 import { hilog } from "@kit.PerformanceAnalysisKit";
 import { SafeChangeNotifier } from '../service/notifier';
 import { OutputEvent } from '../abstract/output';
 import { AsyncMutex } from '../service/locker';
 import { Output } from '../abstract/output';
 import { levels } from '../service/level';
+
+export interface IRequestFile {
+  filename: string;
+  name: string;
+  uri: string;
+  type: string;
+}
 
 export interface IConsoleOutput {
   level?: hilog.LogLevel;
@@ -203,7 +209,7 @@ export class SafeWriteFileOutput extends Output {
     return null;
   }
 
-  async readAsRequestFile(): Promise<request.File | null> {
+  async readAsRequestFile(): Promise<IRequestFile | null> {
     return this.lock.synchronized(async () => {
       if (await this.isEmpty()) {
         return null;
@@ -224,7 +230,7 @@ export class SafeWriteFileOutput extends Output {
       const name = filename.replace(/\.log$/, '')
       const type = 'log'
 
-      const file:request.File = {
+      const file:IRequestFile = {
         filename: filename,
         name: name,
         type: type,
@@ -235,7 +241,7 @@ export class SafeWriteFileOutput extends Output {
     });
   }
 
-  async readAsRequestFiles(): Promise<request.File[] | null> {
+  async readAsRequestFiles(): Promise<IRequestFile[] | null> {
     return this.lock.synchronized(async () => {
       if (await this.isEmpty()) {
         return null;
@@ -245,7 +251,7 @@ export class SafeWriteFileOutput extends Output {
         await this.clearFileStream()
       }
 
-      const files: request.File[] = []
+      const files:IRequestFile[] = []
       const uris = await this.getSortedFiles();
 
       if (uris == null || uris.length === 0) {
@@ -257,7 +263,7 @@ export class SafeWriteFileOutput extends Output {
         const name = filename.replace(/\.log$/, '')
         const type = 'log'
 
-        const file:request.File = {
+        const file:IRequestFile = {
           filename: filename,
           name: name,
           type: type,
@@ -511,4 +517,3 @@ export class SafeWriteFileOutput extends Output {
     return true;
   }
 }
-

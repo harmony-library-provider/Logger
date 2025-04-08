@@ -1,3 +1,8 @@
+### v1.1.0
+
+1. 增加 IRequestFile TS类型
+2. 完成 Logger 所有核心 API 验证
+
 ### v1.0.3
 
 1. 修复 SafeWriteFileOutput API bug (isEmpty、clearHistory、getSortedFiles 循环调用)
