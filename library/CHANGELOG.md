@@ -1,3 +1,21 @@
+### v1.1.1
+
+1. 扩展 SafeWriteFileOutput API 选项 (fileFormatter、filePrefix、fileSuffix)
+
+   ```typescript
+      logger.reset({
+         output: new SafeMultiOutput([
+            new SafeWriteFileOutput({
+               storage: 'logger/output/cache',
+               fileFormatter: 'cache.[yyyyMMdd]',
+               filePrefix: 'test-',
+               fileSuffix: 'txt'
+            }),
+            new SafeConsoleOutput()
+         ])
+      })
+   ```
+
 ### v1.1.0
 
 1. 增加 IRequestFile TS类型

@@ -1,9 +1,21 @@
-import { logger } from 'logger'
+import { logger, SafeConsoleOutput, SafeMultiOutput, SafeWriteFileOutput } from 'logger'
 
 @Entry
 @Component
 struct Index {
   async print(message: ESObject) {
+    logger.reset({
+      output: new SafeMultiOutput([
+        new SafeWriteFileOutput({
+          storage: 'logger/output/cache',
+          fileFormatter: 'cache.[yyyyMMdd]',
+          filePrefix: 'test-',
+          fileSuffix: 'txt'
+        }),
+        new SafeConsoleOutput()
+      ])
+    })
+
     // logger.warn
     await logger.warn(message)
 

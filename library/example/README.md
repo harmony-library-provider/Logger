@@ -67,14 +67,18 @@
 
 ### SafeWriteFileOutput - 本地文件读写流
 
-| 参数            | 类型      | 描述                                                                            |
-|:--------------|---------|:------------------------------------------------------------------------------|
-| count         | number  | 储存本地文件数量，超出会自动清理，默认值为 3                                                       | 
-| enable        | boolean | 是否启用 SafeWriteFileOutput, 默认值 true                                            | 
-| storage       | string  | 文件储存路径 (context.filesDir + ${storage}), 默认值 'ohpm.package.logger/output/file' | 
-| encoding      | string  | 文件读写编码，默认值 'utf-8'                                                            | 
-| isOverride    | boolean | 是否允许日志内容覆盖写入，默认值为 false, 即 追加模式                                               |
-| fileFormatter | string  | 文件名格式，默认值为 'yyyyMMdd', (如 20250406.log)                                       | 
+| 参数            | 类型             | 描述                                                                            |
+|:--------------|----------------|:------------------------------------------------------------------------------|
+| level         | hilog.LogLevel | 日志过滤级别, 默认值 hilog.LogLevel.INFO                                               | 
+| count         | number         | 储存本地文件数量，超出会自动清理，默认值为 3                                                       | 
+| enable        | boolean        | 是否启用 SafeWriteFileOutput, 默认值 true                                            | 
+| storage       | string         | 文件储存路径 (context.filesDir + ${storage}), 默认值 'ohpm.package.logger/output/file' | 
+| encoding      | string         | 文件读写编码，默认值 'utf-8'                                                            | 
+| isOverride    | boolean        | 是否允许日志内容覆盖写入，默认值为 false, 即 追加模式                                               |
+| fileFormatter | string         | 文件名格式，默认值为 '[yyyyMMdd]', (如 20250406.log), 中括号内会尝试解析转换                        | 
+| fileSuffix    | string         | 文件名后缀，默认值为 'log'                                                              | 
+| filePrefix    | string         | 文件名前缀，默认值为 ''                                                                 | 
+
 
 <br/>
 

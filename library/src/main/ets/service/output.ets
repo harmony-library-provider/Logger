@@ -29,6 +29,8 @@ export interface ISafeFileOutput {
   encoding?: string;
   isOverride?: boolean;
   fileFormatter?: string;
+  filePrefix?: string;
+  fileSuffix?: string;
 }
 
 export class SafeMultiOutput extends Output {
@@ -109,6 +111,8 @@ export class SafeConsoleOutput extends Output {
 
 export class SafeWriteFileOutput extends Output {
   private fileFormatter = 'yyyyMMdd'
+  private fileSuffix = 'log'
+  private filePrefix = ''
   private isOverride = false
   private encoding = 'utf-8'
   private time = 180000;
@@ -132,6 +136,8 @@ export class SafeWriteFileOutput extends Output {
     this.encoding = options.encoding ?? this.encoding
     this.isOverride = options.isOverride ?? this.isOverride
     this.fileFormatter = options.fileFormatter ?? this.fileFormatter
+    this.fileSuffix = options.fileSuffix || this.fileSuffix
+    this.filePrefix = options.filePrefix || this.filePrefix
   }
 
   async init() {
@@ -181,7 +187,7 @@ export class SafeWriteFileOutput extends Output {
   async getSortedFiles(): Promise<string[] | null> {
     const dir = this.fileDir ?? await this.getFileDirectory();
     const list = fileIo.listFileSync(dir).map(name => dir + '/' + name);
-    const files = list.filter(file => fileIo.lstatSync(file).isFile() && file.endsWith('.log'))
+    const files = list.filter(file => fileIo.lstatSync(file).isFile() && file.endsWith(`.${this.fileSuffix}`))
 
     if (files.length > 0) {
       files.sort((aFile, bFile) => {
@@ -227,8 +233,8 @@ export class SafeWriteFileOutput extends Output {
       }
 
       const filename = uri.split('/').pop()!
-      const name = filename.replace(/\.log$/, '')
-      const type = 'log'
+      const name = filename.replace(/\.[^\.]+$/, '')
+      const type = this.fileSuffix
 
       const file:IRequestFile = {
         filename: filename,
@@ -260,8 +266,8 @@ export class SafeWriteFileOutput extends Output {
 
       for (const uri of uris) {
         const filename = uri.split('/').pop()!
-        const name = filename.replace(/\.log$/, '')
-        const type = 'log'
+        const name = filename.replace(/\.[^\.]+$/, '')
+        const type = this.fileSuffix
 
         const file:IRequestFile = {
           filename: filename,
@@ -393,44 +399,48 @@ export class SafeWriteFileOutput extends Output {
 
   async createFileName(): Promise<string> {
     const date = new Date()
+    const prefix = this.filePrefix
+    const suffix = this.fileSuffix
     const format = this.fileFormatter
-    const filename = format.replace(/YYYY|MM?|DD?|HH?|mm?|ss/gi, type => {
-      switch (type) {
-        case 'YYYY':
-          return String(date.getFullYear())
-        case 'yyyy':
-          return String(date.getFullYear())
-        case 'MM':
-          return String(date.getMonth() >= 9 ? date.getMonth() + 1 : '0' + (date.getMonth() + 1))
-        case 'M':
-          return String(date.getMonth() + 1)
-        case 'DD':
-          return String(date.getDate() > 9 ? date.getDate() : '0' + date.getMonth())
-        case 'dd':
-          return String(date.getDate() > 9 ? date.getDate() : '0' + date.getMonth())
-        case 'D':
-          return String(date.getDate())
-        case 'd':
-          return String(date.getDate())
-        case 'HH':
-          return String(date.getHours() > 9 ? date.getHours() : '0' + date.getHours())
-        case 'hh':
-          return String(date.getHours() > 9 ? date.getHours() : '0' + date.getHours())
-        case 'H':
-          return String(date.getHours())
-        case 'h':
-          return String(date.getHours())
-        case 'mm':
-          return String(date.getMinutes() > 9 ? date.getMinutes() : '0' + date.getMinutes())
-        case 'm':
-          return String(date.getMinutes())
-        case 'ss':
-          return String(date.getSeconds() > 9 ? date.getSeconds() : '0' + date.getSeconds())
-      }
-      return type
-    })
+    const filename = format.replace(/\[(.*?)\]/g, (_, format: string) => {
+      return format.replace(/YYYY|MM?|DD?|HH?|mm?|ss/gi, type => {
+        switch (type) {
+          case 'YYYY':
+            return String(date.getFullYear())
+          case 'yyyy':
+            return String(date.getFullYear())
+          case 'MM':
+            return String(date.getMonth() >= 9 ? date.getMonth() + 1 : '0' + (date.getMonth() + 1))
+          case 'M':
+            return String(date.getMonth() + 1)
+          case 'DD':
+            return String(date.getDate() > 9 ? date.getDate() : '0' + date.getMonth())
+          case 'dd':
+            return String(date.getDate() > 9 ? date.getDate() : '0' + date.getMonth())
+          case 'D':
+            return String(date.getDate())
+          case 'd':
+            return String(date.getDate())
+          case 'HH':
+            return String(date.getHours() > 9 ? date.getHours() : '0' + date.getHours())
+          case 'hh':
+            return String(date.getHours() > 9 ? date.getHours() : '0' + date.getHours())
+          case 'H':
+            return String(date.getHours())
+          case 'h':
+            return String(date.getHours())
+          case 'mm':
+            return String(date.getMinutes() > 9 ? date.getMinutes() : '0' + date.getMinutes())
+          case 'm':
+            return String(date.getMinutes())
+          case 'ss':
+            return String(date.getSeconds() > 9 ? date.getSeconds() : '0' + date.getSeconds())
+        }
 
-    return `${filename}.log`
+        return type
+      })
+    })
+    return `${prefix}${filename}.${suffix}`
   }
 
   async createFileStream(): Promise<void> {
