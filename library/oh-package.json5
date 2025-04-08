@@ -1,11 +1,16 @@
 {
   "name": "logger",
-  "version": "1.0.0",
-  "description": "Logger是一个简单、美观、实用的HarmonyOS应用程序日志框架",
-  "main": "Index.ets",
-  "author": "lin pengteng <china.linpengteng@gmail.com>",
-  "homepage": "https://github.com/harmony-library-provider",
+  "version": "1.0.1",
+  "description": "Logger 是一个简单、美观、实用的 HarmonyOS 应用程序日志框架",
   "repository": "https://github.com/harmony-library-provider/logger",
+  "homepage": "https://github.com/harmony-library-provider",
+  "author": "lin pengteng <china.linpengteng@gmail.com>",
   "license": "Apache-2.0",
+  "main": "Index.ets",
+  "keywords": [
+    "HarmonyOS",
+    "logger",
+    "log"
+  ],
   "dependencies": {}
 }

@@ -1,0 +1,98 @@
+## 相关 API
+
+<br/>
+
+| 抽象API   | 描述     | 目前已实现                                                 |
+|:--------|--------|:------------------------------------------------------|
+| Filter  | 日志过滤条件 | SafeFilter                                            |
+| Output  | 日志输出流  | SafeMultiOutput、SafeConsoleOutput、SafeWriteFileOutput |
+| Printer | 日志内容格式 | SafePrettyPrinter、SafeHybridPrinter、SafeSimplePrinter |
+| Logger  | 日志触发执行 | SafeLogger                                            |
+
+<br/>
+
+### SafeFilter - 日志过滤条件
+
+| 参数    | 类型             | 描述                               |
+|:------|----------------|:---------------------------------|
+| level | hilog.LogLevel | 日志过滤级别, 默认值 hilog.LogLevel.DEBUG | 
+
+<br/>
+
+### SafeLogger - 日志触发执行器
+
+| 参数      | 类型              | 描述                   |
+|:--------|-----------------|:---------------------|
+| level   | hilog.LogLevel  | 修改 this.filter.level | 
+| filter  | 	Filter (必选项)   | 日志过滤条件               |
+| output  | 	Output (必选项) 	 | 日志输出流                |
+| printer | 	Printer (必选项)	 | 日志内容格式               |
+
+<br/>
+
+### SafeSimplePrinter - 简单日志格式，适用于 debug 调试
+
+| 参数 | 类型 | 描述 |
+|:---|----|:---|
+| /  | /  | /  |
+
+<br/>
+
+### SafePrettyPrinter - 美化日志格式，适用于本地文件写入
+
+| 参数                   | 类型                             | 描述                                                                |
+|:---------------------|--------------------------------|:------------------------------------------------------------------|
+| excludeBox           | 	Map<hilog.LogLevel, boolean>	 | 指定哪些日志级别 不 使用边框（Box）包装日志内容                                        |
+| includeBox	          | Map<hilog.LogLevel, boolean>	  | 指定哪些日志级别 要 使用边框（Box）包装日志内容                                        |
+| stackTraceBeginIndex | 	number	                       | 控制堆栈跟踪（StackTrace）的起始索引，跳过前面的堆栈信息(如框架内部调用)，默认值 0                  |
+| noBoxingByDefault    | 	boolean	                      | 如果为 true，默认禁用所有日志级别的边框(除非 includeBox 或 excludeBox 显式设置)，默认值 false |
+| errorMethodCount	    | number	                        | 控制 错误级别（Error） 日志的堆栈跟踪显示的方法数量，默认值 10                              |
+| methodCount	         | number	                        | 控制 非错误级别（非 Error） 日志的堆栈跟踪显示的方法数量，默认值 5                            |
+| lineLength           | 	number                        | 	设置日志边框的视觉宽度(字符数)，默认值 80                                          |
+| printTime	           | boolean                        | 	是否在日志中显示时间戳，默认值 true                                             |
+
+<br/>
+
+### SafeHybridPrinter - 适配不同日志级别的日志格式
+
+| 参数    | 类型        | 描述                                     |
+|:------|-----------|:---------------------------------------|
+| info  | 	Printer	 | 指定 INFO 级别日志使用的打印机实例，未设置时使用默认 printer  |
+| warn  | 	Printer  | 指定 WARN 级别日志使用的打印机实例，未设置时使用默认 printer  |
+| debug | 	Printer	 | 指定 DEBUG 级别日志使用的打印机实例，未设置时使用默认 printer |
+| error | 	Printer	 | 指定 ERROR 级别日志使用的打印机实例，未设置时使用默认 printer |
+| fatal | 	Printer	 | 指定 FATAL 级别日志使用的打印机实例，未设置时使用默认 printer |
+
+<br/>
+
+### SafeWriteFileOutput - 本地文件读写流
+
+| 参数            | 类型      | 描述                                                                            |
+|:--------------|---------|:------------------------------------------------------------------------------|
+| count         | number  | 储存本地文件数量，超出会自动清理，默认值为 3                                                       | 
+| enable        | boolean | 是否启用 SafeWriteFileOutput, 默认值 true                                            | 
+| storage       | string  | 文件储存路径 (context.filesDir + ${storage}), 默认值 'ohpm.package.logger/output/file' | 
+| encoding      | string  | 文件读写编码，默认值 'utf-8'                                                            | 
+| isOverride    | boolean | 是否允许日志内容覆盖写入，默认值为 false, 即 追加模式                                               |
+| fileFormatter | string  | 文件名格式，默认值为 'yyyyMMdd', (如 20250406.log)                                       | 
+
+<br/>
+
+### SafeConsoleOutput - 命令行输出流
+
+| 参数     | 类型             | 描述                               |
+|:-------|----------------|:---------------------------------|
+| level  | hilog.LogLevel | 日志过滤级别, 默认值 hilog.LogLevel.DEBUG | 
+| prefix | string         | 日志前缀, 默认值 'Logger'               | 
+| domain | number         | 日志域, 默认值 0xFFCC                  | 
+| enable | boolean        | 是否启用 ConsoleOutput, 默认值 true     | 
+
+<br/>
+
+### SafeMultiOutput - 适配多个输出流
+
+| 参数 | 类型 | 描述 |
+|:---|----|:---|
+| /  | /  | /  | 
+
+<br/>

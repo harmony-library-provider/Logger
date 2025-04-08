@@ -5,7 +5,7 @@ import { logger } from 'logger'
 struct Index {
   async print(message: ESObject) {
     // logger.warn
-    await logger.fatal(message)
+    await logger.warn(message)
 
     // readAsString start
     const string = await logger.readAsString()
