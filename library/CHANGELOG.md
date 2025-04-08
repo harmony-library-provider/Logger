@@ -1,3 +1,8 @@
+### v1.2.0
+
+1. 调整 compatibleSdkVersion: 5.0.0(12)
+   - 适配 API12 版本
+
 ### v1.1.2
 
 1. 优化 SafeWriteFileOutput 文件读取 API
