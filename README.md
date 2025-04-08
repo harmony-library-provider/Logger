@@ -47,33 +47,41 @@ Logger 是一个简单、美观、实用的HarmonyOS应用程序日志框架...
 #### 1. 预设了 logger
 
 ```typescript
-  // 目前已预设 logger, 可按需自定义，具体可参考 API
-  export const logger = new SafeLogger({
-    printer: new SafeHybridPrinter(new SafePrettyPrinter(), { debug: new SafeSimplePrinter() }),
-    output: new SafeMultiOutput([new SafeConsoleOutput(), new SafeWriteFileOutput()]),
-    filter: new SafeFilter(),
-  })
+  // 目前已预设 logger
+export const logger = new SafeLogger({
+  printer: new SafeHybridPrinter(new SafePrettyPrinter(), { debug: new SafeSimplePrinter() }),
+  output: new SafeMultiOutput([new SafeConsoleOutput(), new SafeWriteFileOutput()]),
+  filter: new SafeFilter(),
+})
+
+// 可按需自定义
+logger.reset({
+  output: new SafeMultiOutput([
+    new SafeConsoleOutput(),
+    new SafeWriteFileOutput({ storage: 'logger/output/cache'})
+  ])
+})
 ```
 
 #### 2. 相关使用说明
 
 ```typescript
   // 触发 hilog[level]
-  logger.debug('...[debug] message...')
-  logger.info('...[info] message...')
-  logger.warn('...[warn] message...')
-  logger.error('...[error] message...')
-  logger.fatal('...[fatal] message...')
+logger.debug('...[debug] message...')
+logger.info('...[info] message...')
+logger.warn('...[warn] message...')
+logger.error('...[error] message...')
+logger.fatal('...[fatal] message...')
 
-  // 读取日志文件, 可用来上传、或文本显示
-  const file = await logger.readAsRequestFile() // request.File 类型
-  const file = await logger.readAsRequestFiles() // request.File[] 类型
+// 读取日志文件, 可用来上传、或文本显示
+const file = await logger.readAsRequestFile() // request.File 类型
+const file = await logger.readAsRequestFiles() // request.File[] 类型
 
-  const file = await logger.readAsArrayBuffers() // ArrayBuffer[] 类型
-  const file = await logger.readAsArrayBuffer() // ArrayBuffer 类型
+const file = await logger.readAsArrayBuffers() // ArrayBuffer[] 类型
+const file = await logger.readAsArrayBuffer() // ArrayBuffer 类型
 
-  const file = await logger.readAsStrings() // string[] 类型 (文本内容)
-  const file = await logger.readAsString() // string 类型 (文本内容)
+const file = await logger.readAsStrings() // string[] 类型 (文本内容)
+const file = await logger.readAsString() // string 类型 (文本内容)
 ```
 
 <br/>

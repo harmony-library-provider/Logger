@@ -47,11 +47,19 @@ Logger 是一个简单、美观、实用的HarmonyOS应用程序日志框架...
 #### 1. 预设了 logger
 
 ```typescript
-  // 目前已预设 logger, 可按需自定义，具体可参考 API
+  // 目前已预设 logger
   export const logger = new SafeLogger({
     printer: new SafeHybridPrinter(new SafePrettyPrinter(), { debug: new SafeSimplePrinter() }),
     output: new SafeMultiOutput([new SafeConsoleOutput(), new SafeWriteFileOutput()]),
     filter: new SafeFilter(),
+  })
+
+  // 可按需自定义
+  logger.reset({ 
+    output: new SafeMultiOutput([
+      new SafeConsoleOutput(), 
+      new SafeWriteFileOutput({ storage: 'logger/output/cache'})
+    ])
   })
 ```
 

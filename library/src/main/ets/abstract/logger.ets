@@ -11,7 +11,7 @@ export type OutputCallback = (event: OutputEvent) => void
 export type LogCallback = (event: LogEvent) => void
 
 export abstract class Logger {
-  private isReady: Promise<ESObject>;
+  private isReady: Promise<void>;
   private active: boolean = false;
   public printer: Printer;
   public output: Output;
@@ -41,34 +41,54 @@ export abstract class Logger {
       this.filter.level = options.level
     }
 
-    const promise = Promise.all([this.printer.init(), this.output.init(), this.filter.init()])
-    this.isReady = promise.then(() => this.active = true)
-  }
+    const promise = Promise.all([
+      this.printer.init(),
+      this.output.init(),
+      this.filter.init()
+    ])
 
-  public async info(message: ESObject, error?: ESObject, stack?: ESObject): Promise<void> {
-    return this.log({
-      time: new Date(),
-      level: hilog.LogLevel.INFO,
-      message: message,
-      error: error,
-      stack: stack,
+    this.isReady = promise.then(() => {
+      this.active = true
     })
   }
 
-  public async warn(message: ESObject, error?: ESObject, stack?: ESObject): Promise<void> {
-    return this.log({
-      time: new Date(),
-      level: hilog.LogLevel.WARN,
-      message: message,
-      error: error,
-      stack: stack,
+  public async reset(options: Partial<ILogger>) {
+    const oldFilter = this.filter
+    const oldOutput = this.output
+    const oldPrinter = this.printer
+    const newPromises = [this.isReady]
+
+    this.filter = options.filter ?? oldFilter
+    this.output = options.output ?? oldOutput
+    this.printer = options.printer ?? oldPrinter
+
+    if (options.level) {
+      this.filter.level = options.level
+    }
+
+    if (this.filter !== oldFilter) {
+      newPromises.push(this.filter.init())
+    }
+
+    if (this.output !== oldOutput) {
+      newPromises.push(this.output.init())
+    }
+
+    if (this.printer !== oldPrinter) {
+      newPromises.push(this.printer.init())
+    }
+
+    const promise = Promise.all(newPromises)
+
+    this.isReady = promise.then(() => {
+      this.active = true
     })
   }
 
-  public async debug(message: ESObject, error?: ESObject, stack?: ESObject): Promise<void> {
+  public async fatal(message: ESObject, error?: ESObject, stack?: ESObject): Promise<void> {
     return this.log({
       time: new Date(),
-      level: hilog.LogLevel.DEBUG,
+      level: hilog.LogLevel.FATAL,
       message: message,
       error: error,
       stack: stack,
@@ -85,10 +105,30 @@ export abstract class Logger {
     })
   }
 
-  public async fatal(message: ESObject, error?: ESObject, stack?: ESObject): Promise<void> {
+  public async debug(message: ESObject, error?: ESObject, stack?: ESObject): Promise<void> {
     return this.log({
       time: new Date(),
-      level: hilog.LogLevel.FATAL,
+      level: hilog.LogLevel.DEBUG,
+      message: message,
+      error: error,
+      stack: stack,
+    })
+  }
+
+  public async warn(message: ESObject, error?: ESObject, stack?: ESObject): Promise<void> {
+    return this.log({
+      time: new Date(),
+      level: hilog.LogLevel.WARN,
+      message: message,
+      error: error,
+      stack: stack,
+    })
+  }
+
+  public async info(message: ESObject, error?: ESObject, stack?: ESObject): Promise<void> {
+    return this.log({
+      time: new Date(),
+      level: hilog.LogLevel.INFO,
       message: message,
       error: error,
       stack: stack,

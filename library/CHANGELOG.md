@@ -1,4 +1,14 @@
-## CHANGELOG
+### v1.0.2
+
+1. 预设的 logger 支持自定义选项 (reset API)
+
+   ```typescript
+     logger.reset({
+       printer: new SafeHybridPrinter(new SafePrettyPrinter(), { debug: new SafeSimplePrinter() }),
+       output: new SafeMultiOutput([new SafeConsoleOutput(), new SafeWriteFileOutput()]),
+       // filter: new SafeFilter(),
+     })
+   ```
 
 ### v1.0.1
 
