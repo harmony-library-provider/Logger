@@ -1,3 +1,15 @@
+### v1.1.2
+
+1. 优化 SafeWriteFileOutput 文件读取 API
+   ```text
+      - readAsRequestFile: 返回类型 { filename: string; name: string; uri: string; type: string; }
+      - readAsRequestFiles: 返回类型 { filename: string; name: string; uri: string; type: string; }[]
+      - readAsArrayBuffers: 返回类型 { filename: string; buffer: ArrayBuffer; type: string; }[]
+      - readAsArrayBuffer: 返回类型 { filename: string; buffer: ArrayBuffer; type: string; }
+      - readAsStrings: 返回类型 { filename: string; content: string; type: string; }[]
+      - readAsString: 返回类型 { filename: string; content: string; type: string; }
+   ```
+
 ### v1.1.1
 
 1. 扩展 SafeWriteFileOutput API 选项 (fileFormatter、filePrefix、fileSuffix)

@@ -82,11 +82,11 @@ logger.fatal('...[fatal] message...')
 const file = await logger.readAsRequestFile() // IRequestFile 类型 (适配 request.File)
 const file = await logger.readAsRequestFiles() // IRequestFile[] 类型 (适配 request.File)
 
-const file = await logger.readAsArrayBuffers() // ArrayBuffer[] 类型 (适配 axios FormData)
-const file = await logger.readAsArrayBuffer() // ArrayBuffer 类型 (适配 axios FormData)
+const file = await logger.readAsArrayBuffers() // IArrayBuffer[] 类型 (适配 axios FormData)
+const file = await logger.readAsArrayBuffer() // IArrayBuffer 类型 (适配 axios FormData)
 
-const file = await logger.readAsStrings() // string[] 类型 (文本内容)
-const file = await logger.readAsString() // string 类型 (文本内容)
+const file = await logger.readAsStrings() // IString[] 类型 (文本内容)
+const file = await logger.readAsString() // IString 类型 (文本内容)
 ```
 
 <br/>

@@ -7,6 +7,18 @@ import { AsyncMutex } from '../service/locker';
 import { Output } from '../abstract/output';
 import { levels } from '../service/level';
 
+export interface IString {
+  filename: string;
+  content: string;
+  type: string;
+}
+
+export interface IArrayBuffer {
+  filename: string;
+  buffer: ArrayBuffer;
+  type: string;
+}
+
 export interface IRequestFile {
   filename: string;
   name: string;
@@ -283,7 +295,7 @@ export class SafeWriteFileOutput extends Output {
     });
   }
 
-  async readAsArrayBuffers(): Promise<ArrayBuffer[] | null> {
+  async readAsArrayBuffers(): Promise<IArrayBuffer[] | null> {
     return this.lock.synchronized(async () => {
       if (await this.isEmpty()) {
         return null;
@@ -293,7 +305,7 @@ export class SafeWriteFileOutput extends Output {
         await this.clearFileStream()
       }
 
-      const bufArr: ArrayBuffer[] = []
+      const iBufArr: IArrayBuffer[] = []
       const files = await this.getSortedFiles();
 
       if (files == null || files.length === 0) {
@@ -301,20 +313,26 @@ export class SafeWriteFileOutput extends Output {
       }
 
       for (const path of files) {
+        const type = 'text/plain'
+        const name = path.split('/').pop()!
         const stat = fileIo.lstatSync(path)
         const file = fileIo.openSync(path, fileIo.OpenMode.READ_ONLY)
         const buf = new ArrayBuffer(stat.size)
 
         fileIo.readSync(file.fd, buf);
 
-        bufArr.push(buf)
+        iBufArr.push({
+          filename: name,
+          buffer: buf,
+          type: type,
+        })
       }
 
-      return bufArr;
+      return iBufArr;
     });
   }
 
-  async readAsArrayBuffer(): Promise<ArrayBuffer | null> {
+  async readAsArrayBuffer(): Promise<IArrayBuffer | null> {
     return this.lock.synchronized(async () => {
       if (await this.isEmpty()) {
         return null;
@@ -331,17 +349,25 @@ export class SafeWriteFileOutput extends Output {
         return null;
       }
 
+      const type = 'text/plain'
+      const name = path.split('/').pop()!
       const stat = fileIo.lstatSync(path)
       const file = fileIo.openSync(path, fileIo.OpenMode.READ_ONLY)
       const buf = new ArrayBuffer(stat.size)
 
       fileIo.readSync(file.fd, buf);
 
-      return buf;
+      const iBuffer: IArrayBuffer = {
+        filename: name,
+        buffer: buf,
+        type: type,
+      };
+
+      return iBuffer
     });
   }
 
-  async readAsStrings(): Promise<string[] | null> {
+  async readAsStrings(): Promise<IString[] | null> {
     return this.lock.synchronized(async () => {
       if (await this.isEmpty()) {
         return null;
@@ -351,7 +377,7 @@ export class SafeWriteFileOutput extends Output {
         await this.clearFileStream()
       }
 
-      const logs: Array<string> = [];
+      const logs: Array<IString> = [];
       const files = await this.getSortedFiles();
 
       if (files == null || files.length === 0) {
@@ -359,14 +385,22 @@ export class SafeWriteFileOutput extends Output {
       }
 
       for (const file of files) {
-        logs.push(fileIo.readTextSync(file, { encoding: this.encoding }));
+        const filename = file.split('/').pop()!
+        const content = fileIo.readTextSync(file, { encoding: this.encoding })
+        const type = 'text/plain'
+
+        logs.push({
+          filename: filename,
+          content: content,
+          type: type,
+        });
       }
 
       return logs;
     });
   }
 
-  async readAsString(): Promise<string | null> {
+  async readAsString(): Promise<IString | null> {
     return this.lock.synchronized(async () => {
       if (await this.isEmpty()) {
         return null;
@@ -382,7 +416,17 @@ export class SafeWriteFileOutput extends Output {
         return null;
       }
 
-      return fileIo.readTextSync(files[0], { encoding: this.encoding })
+      const filename = files[0].split('/').pop()!
+      const content = fileIo.readTextSync(files[0], { encoding: this.encoding })
+      const type = 'text/plain'
+
+      const log: IString = {
+        filename: filename,
+        content: content,
+        type: type,
+      }
+
+      return log
     });
   }
 
