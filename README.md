@@ -57,8 +57,8 @@ export const logger = new SafeLogger({
 // 可按需自定义
 logger.reset({
   output: new SafeMultiOutput([
-    new SafeConsoleOutput(),
-    new SafeWriteFileOutput({ storage: 'logger/output/cache'})
+    new SafeWriteFileOutput({ storage: 'logger/output/cache'}),
+    new SafeConsoleOutput()
   ])
 })
 ```

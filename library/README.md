@@ -57,8 +57,8 @@ Logger 是一个简单、美观、实用的HarmonyOS应用程序日志框架...
   // 可按需自定义
   logger.reset({ 
     output: new SafeMultiOutput([
-      new SafeConsoleOutput(), 
-      new SafeWriteFileOutput({ storage: 'logger/output/cache'})
+      new SafeWriteFileOutput({ storage: 'logger/output/cache'}),
+      new SafeConsoleOutput()
     ])
   })
 ```

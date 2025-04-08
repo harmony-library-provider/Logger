@@ -1,3 +1,7 @@
+### v1.0.3
+
+1. 修复 SafeWriteFileOutput API bug (isEmpty、clearHistory、getSortedFiles 循环调用)
+
 ### v1.0.2
 
 1. 预设的 logger 支持自定义选项 (reset API)

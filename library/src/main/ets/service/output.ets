@@ -173,10 +173,6 @@ export class SafeWriteFileOutput extends Output {
   }
 
   async getSortedFiles(): Promise<string[] | null> {
-    if (await this.isEmpty()) {
-      return null;
-    }
-
     const dir = this.fileDir ?? await this.getFileDirectory();
     const list = fileIo.listFileSync(dir).map(name => dir + '/' + name);
     const files = list.filter(file => fileIo.lstatSync(file).isFile() && file.endsWith('.log'))
