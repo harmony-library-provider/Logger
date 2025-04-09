@@ -122,7 +122,7 @@ export class SafeConsoleOutput extends Output {
 }
 
 export class SafeWriteFileOutput extends Output {
-  private fileFormatter = 'yyyyMMdd'
+  private fileFormatter = '[yyyyMMdd]'
   private fileSuffix = 'log'
   private filePrefix = ''
   private isOverride = false
