@@ -49,6 +49,7 @@
 | errorMethodCount	    | number	                        | 控制 错误级别（Error） 日志的堆栈跟踪显示的方法数量，默认值 10                              |
 | methodCount	         | number	                        | 控制 非错误级别（非 Error） 日志的堆栈跟踪显示的方法数量，默认值 5                            |
 | lineLength           | 	number                        | 	设置日志边框的视觉宽度(字符数)，默认值 80                                          |
+| minifyCode	          | boolean                        | 	是否在 JSON.stringify 序列化中消除空白缩进字符，默认值 false                        |
 | printTime	           | boolean                        | 	是否在日志中显示时间戳，默认值 true                                             |
 
 <br/>

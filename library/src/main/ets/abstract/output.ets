@@ -15,9 +15,9 @@ export abstract class Output {
 export interface ILogEvent {
   time: Date;
   level: hilog.LogLevel;
-  message?: ESObject;
-  error?: ESObject;
-  stack?: ESObject;
+  message?: Object;
+  error?: Object;
+  stack?: Object;
 }
 
 export class OutputEvent {
@@ -37,9 +37,9 @@ export class OutputEvent {
 export class LogEvent {
   time: Date;
   level: hilog.LogLevel = hilog.LogLevel.DEBUG;
-  message?: ESObject;
-  error?: ESObject;
-  stack?: ESObject;
+  message?: Object;
+  error?: Object;
+  stack?: Object;
 
   constructor(options: ILogEvent) {
     this.time = options.time

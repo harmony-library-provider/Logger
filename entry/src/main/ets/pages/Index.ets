@@ -1,4 +1,8 @@
-import { logger, SafeConsoleOutput, SafeMultiOutput, SafeWriteFileOutput } from 'logger'
+import { SafeWriteFileOutput } from 'logger'
+import { SafeConsoleOutput } from 'logger'
+import { SafeMultiOutput } from 'logger'
+import { logger } from 'logger'
+
 
 @Entry
 @Component
@@ -92,6 +96,8 @@ struct Index {
       .margin({ top: 56 })
       .width('100%')
     }
+    .expandSafeArea([SafeAreaType.SYSTEM], [SafeAreaEdge.TOP, SafeAreaEdge.BOTTOM])
+    .backgroundColor(Color.White)
     .height('100%')
     .width('100%')
   }

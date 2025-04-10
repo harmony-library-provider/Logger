@@ -12,6 +12,7 @@ export interface ISafePrettyPrinter {
   errorMethodCount?: number;
   methodCount?: number;
   lineLength?: number;
+  minifyCode?: boolean;
   printTime?: boolean;
 }
 
@@ -39,14 +40,16 @@ export class SafePrettyPrinter extends Printer {
   methodCount: number = 5;
   lineLength: number = 80;
   printTime: boolean = true
-  _topBorder: string = '';
-  _middleBorder: string = '';
+  minifyCode: boolean = false
   _bottomBorder: string = '';
+  _middleBorder: string = '';
+  _topBorder: string = '';
 
   constructor(options: ISafePrettyPrinter = {}) {
     super()
 
     this.printTime = options.printTime ?? this.printTime
+    this.minifyCode = options.minifyCode ?? this.minifyCode
     this.lineLength = options.lineLength ?? this.lineLength
     this.methodCount = options.methodCount ?? this.methodCount
     this.errorMethodCount = options.errorMethodCount ?? this.errorMethodCount
@@ -94,8 +97,8 @@ export class SafePrettyPrinter extends Printer {
     return !line;
   }
 
-  formatStackTrace(stack: string | null, methodCount: number): string | null {
-    const lines = stack?.split('\n') ?? [];
+  formatStackTrace(stack: Object | null, methodCount: number): string | null {
+    const lines = stack?.toString().split('\n') ?? [];
     const traces = [...lines.filter((line) => !this.discardStacktrace(line))];
     const formatted: string[] = [];
 
@@ -122,25 +125,54 @@ export class SafePrettyPrinter extends Printer {
     return null;
   }
 
-  formatMessage(message: ESObject): string | null {
-    const finalMessage: ESObject = typeof message === 'function' ? message() : message;
-
-    if (typeof finalMessage === 'string' || typeof finalMessage === 'number') {
-      return `${finalMessage}`
+  formatSerialize(message?: Object): Object | undefined | null {
+    if (message instanceof Set) {
+      return Object({ __type__: 'Set', value:  Array.from(message) })
     }
 
-    if (finalMessage == undefined || finalMessage == null) {
+    if (message instanceof Map) {
+      return Object({
+        __type__: 'Map',
+        value: Array.from(message, (arr: [string, Object]) => {
+          const obj: Record<string, Object> = Object({})
+          const val: Object = arr[1]
+          const key: string = arr[0]
+          obj[key] = val
+          return obj
+        })
+      })
+    }
+
+    return message
+  }
+
+  formatMessage(message?: Object): string | null {
+    const replacer = (_: string, v: object) => this.formatSerialize(v)
+
+    if (message === undefined || message === null) {
       return null;
     }
 
-    if (typeof finalMessage === 'object') {
-      return JSON.stringify(finalMessage, undefined, 2)
+    if (typeof message === 'function') {
+      message = message()
+    }
+
+    if (typeof message === 'number') {
+      return `${message}`
+    }
+
+    if (typeof message === 'string') {
+      return `${message}`
+    }
+
+    if (typeof message === 'object') {
+      return JSON.stringify(message, replacer, !this.minifyCode ? 2 : undefined)
     }
 
     return null;
   }
 
-  formatError(error: ESObject): string | null {
+  formatError(error?: Object): string | null {
     if (error != undefined && error != null) {
       return error.toString();
     }
@@ -150,6 +182,7 @@ export class SafePrettyPrinter extends Printer {
 
   formater(options: IFormatOptions) {
     let border = false;
+
     const time = options.time
     const level = options.level
     const stack = options.stack
@@ -227,7 +260,7 @@ export class SafePrettyPrinter extends Printer {
 
     if (origin.stack != null) {
       const count = Math.max(isError ? this.errorMethodCount : this.methodCount, 1);
-      stackTraceStr = this.formatStackTrace(origin.stack, count);
+      stackTraceStr = this.formatStackTrace(origin.stack ?? null, count);
     }
 
     if (origin.stack == null) {
@@ -272,7 +305,7 @@ export class SafeHybridPrinter extends Printer {
 
 export class SafeSimplePrinter extends Printer {
   print(event: LogEvent): string[] {
-    let message: ESObject = event.message != null ? event.message : ''
+    let message: Object = event.message != null ? event.message : ''
     let time: string = `[${event.time.toISOString()}] =>`
 
     if (typeof message === 'function') {
@@ -280,7 +313,7 @@ export class SafeSimplePrinter extends Printer {
     }
 
     if (typeof message !== 'string') {
-      message = JSON.stringify(message, null, 2)
+      message = JSON.stringify(message)
     }
 
     return [`${time} ${message}`]

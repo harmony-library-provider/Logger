@@ -7,7 +7,7 @@ export class levels {
   static error = hilog.LogLevel.ERROR;
   static fatal = hilog.LogLevel.FATAL;
 
-  static proxy(level: ESObject) {
+  static proxy(level: hilog.LogLevel) {
     switch (level) {
       case levels.info: {
         return hilog.info
@@ -35,7 +35,7 @@ export class levels {
     }
   }
 
-  static label(level: ESObject) {
+  static label(level: hilog.LogLevel) {
     switch (level) {
       case levels.info:
         return 'Info'
@@ -57,7 +57,7 @@ export class levels {
     }
   }
 
-  static check(level: ESObject) {
+  static check(level: hilog.LogLevel) {
     return (
       level === levels.info ||
         level === levels.warn ||
@@ -67,7 +67,7 @@ export class levels {
     )
   }
 
-  static every(fn: ESObject) {
+  static every(fn: (level: hilog.LogLevel) => void) {
     if (typeof fn === 'function') {
       fn(levels.info)
       fn(levels.warn)

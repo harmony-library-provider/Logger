@@ -85,7 +85,7 @@ export abstract class Logger {
     })
   }
 
-  public async fatal(message: ESObject, error?: ESObject, stack?: ESObject): Promise<void> {
+  public async fatal(message: Object, error?: Object, stack?: Object): Promise<void> {
     return this.log({
       time: new Date(),
       level: hilog.LogLevel.FATAL,
@@ -95,7 +95,7 @@ export abstract class Logger {
     })
   }
 
-  public async error(message: ESObject, error?: ESObject, stack?: ESObject): Promise<void> {
+  public async error(message: Object, error?: Object, stack?: Object): Promise<void> {
     return this.log({
       time: new Date(),
       level: hilog.LogLevel.ERROR,
@@ -105,7 +105,7 @@ export abstract class Logger {
     })
   }
 
-  public async debug(message: ESObject, error?: ESObject, stack?: ESObject): Promise<void> {
+  public async debug(message: Object, error?: Object, stack?: Object): Promise<void> {
     return this.log({
       time: new Date(),
       level: hilog.LogLevel.DEBUG,
@@ -115,7 +115,7 @@ export abstract class Logger {
     })
   }
 
-  public async warn(message: ESObject, error?: ESObject, stack?: ESObject): Promise<void> {
+  public async warn(message: Object, error?: Object, stack?: Object): Promise<void> {
     return this.log({
       time: new Date(),
       level: hilog.LogLevel.WARN,
@@ -125,7 +125,7 @@ export abstract class Logger {
     })
   }
 
-  public async info(message: ESObject, error?: ESObject, stack?: ESObject): Promise<void> {
+  public async info(message: Object, error?: Object, stack?: Object): Promise<void> {
     return this.log({
       time: new Date(),
       level: hilog.LogLevel.INFO,

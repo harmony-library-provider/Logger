@@ -2,9 +2,9 @@
 
 Logger 是一个简单、美观、实用的HarmonyOS应用程序日志框架...
 
-- 支持多种数据格式，如基本数据类型、对象、等可以被 JSON.stringify 序列化数据
-- 支持自定义日志行为，如本地文件读写、日志上报等
-- 支持堆栈信息输出
+- 支持 多种数据格式，如基本数据类型、对象、Class、Map、Set 等支持 JSON.stringify 序列化数据
+- 支持 自定义日志行为，如本地文件读写 (定期自动清理)、云端日志上报等
+- 支持 堆栈信息输出
 - 支持 API12+
 
 ### 示例
@@ -12,6 +12,7 @@ Logger 是一个简单、美观、实用的HarmonyOS应用程序日志框架...
 # file: 20250406.log
 # logger.info('Test logger.info...')
 # logger.warn('Test logger.warn...')
+# logger.warn(new Map([['name', '这是一个 Map 对象']]))
 # ------------------------------------------------------
 ┌────────────────────────────────────────────────────────────────────────────────
 │ Info | 2025-04-06 14:58:59.810 (+00:00:25.276)
@@ -30,6 +31,22 @@ Logger 是一个简单、美观、实用的HarmonyOS应用程序日志框架...
 │ #0    at print (library/src/main/ets/service/printer.ets:235:45)
 │ #1    at print (library/src/main/ets/service/printer.ets:269:12)
 │ #2    at log (library/src/main/ets/abstract/logger.ets:114:22)
+└────────────────────────────────────────────────────────────────────────────────
+┌────────────────────────────────────────────────────────────────────────────────
+│ Warn | 2025-04-06 14:59:02.850 (+00:00:28.316)
+├┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄
+│ {
+│   "__type__": "Map",
+│   "value": [
+│     {
+│       "name": "这是一个 Map 对象"
+│     }
+│   ]
+│ }
+├┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄
+│ #0    at print (library/src/main/ets/service/printer.ets:268:45)
+│ #1    at print (library/src/main/ets/service/printer.ets:302:12)
+│ #2    at log (library/src/main/ets/abstract/logger.ets:154:22)
 └────────────────────────────────────────────────────────────────────────────────
 ```
 
@@ -141,6 +158,7 @@ const file = await logger.readAsString() // IString 类型 (文本内容)
 | errorMethodCount	    | number	                        | 控制 错误级别（Error） 日志的堆栈跟踪显示的方法数量，默认值 10                              |
 | methodCount	         | number	                        | 控制 非错误级别（非 Error） 日志的堆栈跟踪显示的方法数量，默认值 5                            |
 | lineLength           | 	number                        | 	设置日志边框的视觉宽度(字符数)，默认值 80                                          |
+| minifyCode	          | boolean                        | 	是否在 JSON.stringify 序列化中消除空白缩进字符，默认值 false                        |
 | printTime	           | boolean                        | 	是否在日志中显示时间戳，默认值 true                                             |
 
 <br/>
