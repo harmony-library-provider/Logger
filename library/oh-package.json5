@@ -1,6 +1,6 @@
 {
   "name": "logger",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "description": "Logger 是一个简单、美观、实用的 HarmonyOS 应用程序日志框架",
   "repository": "https://github.com/harmony-library-provider/logger",
   "homepage": "https://github.com/harmony-library-provider",
@@ -8,7 +8,9 @@
   "license": "Apache-2.0",
   "main": "Index.ets",
   "keywords": [
+    "HarmonyOS NEXT",
     "HarmonyOS",
+    "ArkTS",
     "logger",
     "log"
   ],

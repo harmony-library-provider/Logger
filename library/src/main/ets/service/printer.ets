@@ -139,7 +139,7 @@ export class SafePrettyPrinter extends Printer {
           const key: string = arr[0]
           obj[key] = val
           return obj
-        })
+        })[0]
       })
     }
 

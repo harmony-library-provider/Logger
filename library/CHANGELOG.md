@@ -1,3 +1,25 @@
+### v1.2.3
+1. fix the bug of print Map, eg.
+
+   ```shell
+      # logger.warn(new Map([['name', '这是一个 Map 对象']]))
+      # --------------------------------------------------------------
+      ┌────────────────────────────────────────────────────────────────────────────────
+      │ Warn | 2025-04-10 11:04:24.127 (+00:00:05.072)
+      ├┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄
+      │ {
+      │   "__type__": "Map",
+      │   "value": {
+      │     "name": "这是一个 Map 对象"
+      │   }
+      │ }
+      ├┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄
+      │ #0    at print (library/src/main/ets/service/printer.ets:268:45)
+      │ #1    at print (library/src/main/ets/service/printer.ets:302:12)
+      │ #2    at log (library/src/main/ets/abstract/logger.ets:154:22)
+      └────────────────────────────────────────────────────────────────────────────────
+   ```
+
 ### v1.2.2
 
 1. 支持复杂的数据类型，例如 Class、Map、Set 等
@@ -21,6 +43,7 @@
       │ #2    at log (library/src/main/ets/abstract/logger.ets:154:22)
       └────────────────────────────────────────────────────────────────────────────────
    ```
+
 
 ### v1.2.1
 
@@ -85,9 +108,9 @@
 
 ### v1.0.1
 
-1. 测试 logger API (debug、info、readAsArrayBuffer、readAsString...)  
-2. 完善 example of Logger (Console、ReadAs)  
-3. 更新 keywords of oh-package.json  
+1. 测试 logger API (debug、info、readAsArrayBuffer、readAsString...)
+2. 完善 example of Logger (Console、ReadAs)
+3. 更新 keywords of oh-package.json
 
 ### v1.0.0
 
@@ -98,7 +121,7 @@
      - Logger (触发)
      - Printer (格式)
    ```
-   
+
 2. 实现 核心功能
    ```text
      - Logger: SafeLogger
@@ -106,7 +129,7 @@
      - Output: SafeMultiOutput、SafeConsoleOutput、SafeWriteFileOutput
      - Printer: SafePrettyPrinter、SafeHybridPrinter、SafeSimplePrinter
    ```
-  
+
 3. 预设 logger (new SafeLogger)
      ```typescript
        export const logger = new SafeLogger({
