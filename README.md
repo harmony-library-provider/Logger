@@ -64,45 +64,46 @@ Logger 是一个简单、美观、实用的HarmonyOS应用程序日志框架...
 
 ```typescript
   // 目前已预设 logger
-export const logger = new SafeLogger({
-  printer: new SafeHybridPrinter(new SafePrettyPrinter(), { debug: new SafeSimplePrinter() }),
-  output: new SafeMultiOutput([new SafeConsoleOutput(), new SafeWriteFileOutput()]),
-  filter: new SafeFilter(),
-})
-
-// 可按需自定义, eg. file = context.filesDir + '/logger/output/cache/test-cache.20250408.txt'
-logger.reset({
-  output: new SafeMultiOutput([
-    new SafeWriteFileOutput({
-      storage: 'logger/output/cache',
-      fileFormatter: 'cache.[yyyyMMdd]',
-      filePrefix: 'test-',
-      fileSuffix: 'txt'
-    }),
-    new SafeConsoleOutput()
-  ])
-})
+  export const logger = new SafeLogger({
+    printer: new SafeHybridPrinter(new SafePrettyPrinter(), { debug: new SafeSimplePrinter() }),
+    output: new SafeMultiOutput([new SafeConsoleOutput(), new SafeWriteFileOutput()]),
+    filter: new SafeFilter(),
+  })
+  
+  // 可按需自定义, eg. file = context.filesDir + '/logger/output/cache/test-cache.20250408.txt'
+  // 更多配置选项，可参考下面 【预设 logger】章节
+  logger.reset({
+    output: new SafeMultiOutput([
+      new SafeWriteFileOutput({
+        storage: 'logger/output/cache',
+        fileFormatter: 'cache.[yyyyMMdd]',
+        filePrefix: 'test-',
+        fileSuffix: 'txt'
+      }),
+      new SafeConsoleOutput()
+    ])
+  })
 ```
 
 #### 2. 相关使用说明
 
 ```typescript
   // 触发 hilog[level]
-logger.debug('...[debug] message...')
-logger.info('...[info] message...')
-logger.warn('...[warn] message...')
-logger.error('...[error] message...')
-logger.fatal('...[fatal] message...')
-
-// 读取日志文件, 可用来上传、或文本显示
-const file = await logger.readAsRequestFile() // IRequestFile 类型 (适配 request.File)
-const file = await logger.readAsRequestFiles() // IRequestFile[] 类型 (适配 request.File)
-
-const file = await logger.readAsArrayBuffers() // IArrayBuffer[] 类型 (适配 axios FormData)
-const file = await logger.readAsArrayBuffer() // IArrayBuffer 类型 (适配 axios FormData)
-
-const file = await logger.readAsStrings() // IString[] 类型 (文本内容)
-const file = await logger.readAsString() // IString 类型 (文本内容)
+  logger.debug('...[debug] message...')
+  logger.info('...[info] message...')
+  logger.warn('...[warn] message...')
+  logger.error('...[error] message...')
+  logger.fatal('...[fatal] message...')
+  
+  // 读取日志文件, 可用来上传、或文本显示
+  const file = await logger.readAsRequestFile() // IRequestFile 类型 (适配 request.File)
+  const file = await logger.readAsRequestFiles() // IRequestFile[] 类型 (适配 request.File)
+  
+  const file = await logger.readAsArrayBuffers() // IArrayBuffer[] 类型 (适配 axios FormData)
+  const file = await logger.readAsArrayBuffer() // IArrayBuffer 类型 (适配 axios FormData)
+  
+  const file = await logger.readAsStrings() // IString[] 类型 (文本内容)
+  const file = await logger.readAsString() // IString 类型 (文本内容)
 ```
 
 <br/>
@@ -205,6 +206,53 @@ const file = await logger.readAsString() // IString 类型 (文本内容)
 | 参数 | 类型 | 描述 |
 |:---|----|:---|
 | /  | /  | /  | 
+
+<br/>
+
+### 预设 logger
+
+| 分类        | 方法                    | 说明                 | 返回类型                              |
+|:----------|:----------------------|:-------------------|-----------------------------------|
+| **自定义选项** | `reset`               | 自定义日志配置            | `Promise<void>`                   |
+| **日志记录**  | `debug`               | 记录 DEBUG 级别日志      | `Promise<void>`                   |
+|           | `info`                | 记录 INFO 级别日志       | `Promise<void>`                   |
+|           | `warn`                | 记录 WARN 级别日志       | `Promise<void>`                   |
+|           | `error`               | 记录 ERROR 级别日志      | `Promise<void>`                   |
+|           | `fatal`               | 记录 FATAL 级别(最高级)日志 | `Promise<void>`                   |
+| **文件读取**  | `readAsRequestFile`   | 读取最新日志文件（文件完整路径）   | `Promise<IRequestFile \| null>`   |
+|           | `readAsRequestFiles`  | 读取近期日志文件（文件完整路径）   | `Promise<IRequestFile[] \| null>` |
+|           | `readAsArrayBuffer`   | 读取最新日志文件（文件二进制数据）  | `Promise<IArrayBuffer \| null>`   |
+|           | `readAsArrayBuffers`  | 读取近期日志文件（文件二进制数据）  | `Promise<IArrayBuffer[] \| null>` |
+|           | `readAsString`        | 读取最新日志文件（文件文本内容）   | `Promise<IString \| null>`        |
+|           | `readAsStrings`       | 读取近期日志文件（文件文本内容）   | `Promise<IString[] \| null>`      |
+| **事件监听**  | `addWriteListener`    | 注册日志写入事件的监听器       | `void`                            |
+|           | `removeWriteListener` | 移除日志写入事件的监听器       | `void`                            |
+| **清理日志**  | `clearHistory`        | 清除过期的日志文件          | `Promise<void>`                   |
+|           | `clearAll`            | 清除所有日志文件(包括当前日志)   | `Promise<void>`                   |
+| **检查日志**  | `isEmpty`             | 检查日志文件是否为空 (即不存在)  | `Promise<boolean>`                |
+
+```typescript
+  // TS 类型说明
+
+  export interface IString {
+  content: string; // 文件内容
+  filename: string; // 文件名 如 '20250410.log'
+  type: string; // 文件类型 如 'text/plain'
+  }
+  
+  export interface IArrayBuffer {
+  buffer: ArrayBuffer; // 文件内容 (字节)
+  filename: string; // 文件名 如 '20250410.log'
+  type: string; // 文件类型 如 'text/plain'
+  }
+  
+  export interface IRequestFile {
+  name: string; // 文件名 (不含后缀) 如 '20250410'
+  filename: string; // 文件名 (含后缀) 如 '20250410.log'
+  uri: string; // 文件完整路径 如 context.filesDir + '/xxxx/20250410/.log'
+  type: string; // 文件后缀，如 'log'
+  }
+```
 
 <br/>
 
