@@ -1,3 +1,11 @@
+### v1.2.6
+1. 修复 SafeWriteFileOutput API bug
+
+   ```shell
+      - this.timer = setTimeout(this.clearFileStream, this.time);
+      + this.timer = setTimeout(() => this.clearFileStream(), this.time);
+   ```
+
 ### v1.2.5
 1. 支持 Map 类型数据 Key 键值为非基本数据
 

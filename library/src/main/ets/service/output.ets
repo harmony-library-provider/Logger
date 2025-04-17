@@ -174,7 +174,7 @@ export class SafeWriteFileOutput extends Output {
 
       clearTimeout(this.timer);
 
-      this.timer = setTimeout(this.clearFileStream, this.time);
+      this.timer = setTimeout(() => this.clearFileStream(), this.time);
 
       await this.lock.synchronized(async () => {
         if (this.fileStream == null || await this.createFileName() != this.fileName) {
