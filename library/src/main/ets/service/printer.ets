@@ -127,20 +127,11 @@ export class SafePrettyPrinter extends Printer {
 
   formatSerialize(message?: Object): Object | undefined | null {
     if (message instanceof Set) {
-      return Object({ __type__: 'Set', __value__:  Array.from(message) })
+      return Object({ __type__: 'Set', __values__:  Array.from(message) })
     }
 
     if (message instanceof Map) {
-      return Object({
-        __type__: 'Map',
-        __value__: Array.from(message, (arr: [string, Object]) => {
-          const obj: Record<string, Object> = Object({})
-          const val: Object = arr[1]
-          const key: string = arr[0]
-          obj[key] = val
-          return obj
-        })[0]
-      })
+      return Object({ __type__: 'Map', __entries__: Array.from(message) })
     }
 
     return message

@@ -10,43 +10,46 @@ Logger is a simple, beautiful and practical HarmonyOS application log framework.
 ### Example
 
 ```bash
-# file: 20250406.log
-# logger.info('Test logger.info...')
-# logger.warn('Test logger.warn...')
-# logger.warn(new Map([['name', 'This is a Map Object']]))
-# ------------------------------------------------------
-┌────────────────────────────────────────────────────────────────────────────────
-│ Info | 2025-04-06 14:58:59.810 (+00:00:25.276)
-├┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄
-│ Test logger.info...
-├┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄
-│ #0    at print (library/src/main/ets/service/printer.ets:235:45)
-│ #1    at print (library/src/main/ets/service/printer.ets:269:12)
-│ #2    at log (library/src/main/ets/abstract/logger.ets:114:22)
-└────────────────────────────────────────────────────────────────────────────────
-┌────────────────────────────────────────────────────────────────────────────────
-│ Warn | 2025-04-06 14:59:01.820 (+00:00:27.286)
-├┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄
-│ Test logger.warn...
-├┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄
-│ #0    at print (library/src/main/ets/service/printer.ets:235:45)
-│ #1    at print (library/src/main/ets/service/printer.ets:269:12)
-│ #2    at log (library/src/main/ets/abstract/logger.ets:114:22)
-└────────────────────────────────────────────────────────────────────────────────
-┌────────────────────────────────────────────────────────────────────────────────
-│ Warn | 2025-04-10 11:04:24.127 (+00:00:05.072)
-├┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄
-│ {
-│   "__type__": "Map",
-│   "__value__": {
-│     "name": "This is a Map Object"
-│   }
-│ }
-├┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄
-│ #0    at print (library/src/main/ets/service/printer.ets:268:45)
-│ #1    at print (library/src/main/ets/service/printer.ets:302:12)
-│ #2    at log (library/src/main/ets/abstract/logger.ets:154:22)
-└────────────────────────────────────────────────────────────────────────────────
+  # file: 20250406.log
+  # logger.info('Test logger.info...')
+  # logger.warn('Test logger.warn...')
+  # logger.warn(new Map([['name', 'This is a Map Object']]))
+  # ------------------------------------------------------
+  ┌────────────────────────────────────────────────────────────────────────────────
+  │ Info | 2025-04-06 14:58:59.810 (+00:00:25.276)
+  ├┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄
+  │ Test logger.info...
+  ├┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄
+  │ #0    at print (library/src/main/ets/service/printer.ets:235:45)
+  │ #1    at print (library/src/main/ets/service/printer.ets:269:12)
+  │ #2    at log (library/src/main/ets/abstract/logger.ets:114:22)
+  └────────────────────────────────────────────────────────────────────────────────
+  ┌────────────────────────────────────────────────────────────────────────────────
+  │ Warn | 2025-04-06 14:59:01.820 (+00:00:27.286)
+  ├┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄
+  │ Test logger.warn...
+  ├┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄
+  │ #0    at print (library/src/main/ets/service/printer.ets:235:45)
+  │ #1    at print (library/src/main/ets/service/printer.ets:269:12)
+  │ #2    at log (library/src/main/ets/abstract/logger.ets:114:22)
+  └────────────────────────────────────────────────────────────────────────────────
+  ┌────────────────────────────────────────────────────────────────────────────────
+  │ Warn | 2025-04-12 12:25:13.608 (+00:00:14.910)
+  ├┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄
+  │ {
+  │   "__type__": "Map",
+  │   "__entries__": [
+  │     [
+  │       "name",
+  │       "This is a Map Object"
+  │     ]
+  │   ]
+  │ }
+  ├┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄
+  │ #0    at print (library/src/main/ets/service/printer.ets:259:45)
+  │ #1    at print (library/src/main/ets/service/printer.ets:293:12)
+  │ #2    at log (library/src/main/ets/abstract/logger.ets:154:22)
+  └────────────────────────────────────────────────────────────────────────────────
 ```
 
 <br/>
@@ -65,46 +68,46 @@ Logger is a simple, beautiful and practical HarmonyOS application log framework.
 
 ```typescript
   // The logger is now preset
-export const logger = new SafeLogger({
-  printer: new SafeHybridPrinter(new SafePrettyPrinter(), { debug: new SafeSimplePrinter() }),
-  output: new SafeMultiOutput([new SafeConsoleOutput(), new SafeWriteFileOutput()]),
-  filter: new SafeFilter(),
-})
-
-// Customizable on demand, eg. file = context.filesDir + '/logger/output/cache/test-cache.20250408.txt'
-// For more configuration options, please refer to the [Preset logger] section below.
-logger.reset({
-  output: new SafeMultiOutput([
-    new SafeWriteFileOutput({
-      storage: 'logger/output/cache',
-      fileFormatter: 'cache.[yyyyMMdd]',
-      filePrefix: 'test-',
-      fileSuffix: 'txt'
-    }),
-    new SafeConsoleOutput()
-  ])
-})
+  export const logger = new SafeLogger({
+    printer: new SafeHybridPrinter(new SafePrettyPrinter(), { debug: new SafeSimplePrinter() }),
+    output: new SafeMultiOutput([new SafeConsoleOutput(), new SafeWriteFileOutput()]),
+    filter: new SafeFilter(),
+  })
+  
+  // Customizable on demand, eg. file = context.filesDir + '/logger/output/cache/test-cache.20250408.txt'
+  // For more configuration options, please refer to the [Preset logger] section below.
+  logger.reset({
+    output: new SafeMultiOutput([
+      new SafeWriteFileOutput({
+        storage: 'logger/output/cache',
+        fileFormatter: 'cache.[yyyyMMdd]',
+        filePrefix: 'test-',
+        fileSuffix: 'txt'
+      }),
+      new SafeConsoleOutput()
+    ])
+  })
 ```
 
 #### 2. Related usage instructions
 
 ```typescript
   // Trigger hilog[level]
-logger.debug('...[debug] message...')
-logger.info('...[info] message...')
-logger.warn('...[warn] message...')
-logger.error('...[error] message...')
-logger.fatal('...[fatal] message...')
-
-// Read log files, which can be used for uploading or text display
-const file = await logger.readAsRequestFile() // IRequestFile Type (Adapting request.File)
-const file = await logger.readAsRequestFiles() // IRequestFile[] Type (Adapting request.File)
-
-const file = await logger.readAsArrayBuffers() // IArrayBuffer[] Type (Adapting axios FormData)
-const file = await logger.readAsArrayBuffer() // IArrayBuffer Type (Adapting axios FormData)
-
-const file = await logger.readAsStrings() // IString[] Type (Text content)
-const file = await logger.readAsString() // IString Type (Text content)
+  logger.debug('...[debug] message...')
+  logger.info('...[info] message...')
+  logger.warn('...[warn] message...')
+  logger.error('...[error] message...')
+  logger.fatal('...[fatal] message...')
+  
+  // Read log files, which can be used for uploading or text display
+  const file = await logger.readAsRequestFile() // IRequestFile Type (Adapting request.File)
+  const file = await logger.readAsRequestFiles() // IRequestFile[] Type (Adapting request.File)
+  
+  const file = await logger.readAsArrayBuffers() // IArrayBuffer[] Type (Adapting axios FormData)
+  const file = await logger.readAsArrayBuffer() // IArrayBuffer Type (Adapting axios FormData)
+  
+  const file = await logger.readAsStrings() // IString[] Type (Text content)
+  const file = await logger.readAsString() // IString Type (Text content)
 ```
 
 <br/>
@@ -236,22 +239,22 @@ const file = await logger.readAsString() // IString Type (Text content)
   // TypeScript description
 
   export interface IString {
-  content: string; // Text content
-  filename: string; // File name, eg. '20250410.log'
-  type: string; // Mime, eg. 'text/plain'
+    content: string; // Text content
+    filename: string; // File name, eg. '20250410.log'
+    type: string; // Mime, eg. 'text/plain'
   }
   
   export interface IArrayBuffer {
-  buffer: ArrayBuffer; // Text content (byte)
-  filename: string; // File name, eg. '20250410.log'
-  type: string; // Mime, eg. 'text/plain'
+    buffer: ArrayBuffer; // Text content (byte)
+    filename: string; // File name, eg. '20250410.log'
+    type: string; // Mime, eg. 'text/plain'
   }
   
   export interface IRequestFile {
-  name: string; // File name (without suffix) eg. '20250410'
-  filename: string; // File name (with suffix) eg. '20250410.log'
-  uri: string; // File fullpath eg. context.filesDir + '/xxxx/20250410/.log'
-  type: string; // File suffix，eg. 'log'
+    name: string; // File name (without suffix) eg. '20250410'
+    filename: string; // File name (with suffix) eg. '20250410.log'
+    uri: string; // File fullpath eg. context.filesDir + '/xxxx/20250410/.log'
+    type: string; // File suffix，eg. 'log'
   }
 ```
 

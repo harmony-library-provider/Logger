@@ -8,44 +8,48 @@ Logger 是一个简单、美观、实用的HarmonyOS应用程序日志框架...
 - 支持 API12+
 
 ### 示例
+
 ```bash
-# file: 20250406.log
-# logger.info('Test logger.info...')
-# logger.warn('Test logger.warn...')
-# logger.warn(new Map([['name', '这是一个 Map 对象']]))
-# ------------------------------------------------------
-┌────────────────────────────────────────────────────────────────────────────────
-│ Info | 2025-04-06 14:58:59.810 (+00:00:25.276)
-├┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄
-│ Test logger.info...
-├┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄
-│ #0    at print (library/src/main/ets/service/printer.ets:235:45)
-│ #1    at print (library/src/main/ets/service/printer.ets:269:12)
-│ #2    at log (library/src/main/ets/abstract/logger.ets:114:22)
-└────────────────────────────────────────────────────────────────────────────────
-┌────────────────────────────────────────────────────────────────────────────────
-│ Warn | 2025-04-06 14:59:01.820 (+00:00:27.286)
-├┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄
-│ Test logger.warn...
-├┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄
-│ #0    at print (library/src/main/ets/service/printer.ets:235:45)
-│ #1    at print (library/src/main/ets/service/printer.ets:269:12)
-│ #2    at log (library/src/main/ets/abstract/logger.ets:114:22)
-└────────────────────────────────────────────────────────────────────────────────
-┌────────────────────────────────────────────────────────────────────────────────
-│ Warn | 2025-04-10 11:04:24.127 (+00:00:05.072)
-├┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄
-│ {
-│   "__type__": "Map",
-│   "__value__": {
-│     "name": "这是一个 Map 对象"
-│   }
-│ }
-├┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄
-│ #0    at print (library/src/main/ets/service/printer.ets:268:45)
-│ #1    at print (library/src/main/ets/service/printer.ets:302:12)
-│ #2    at log (library/src/main/ets/abstract/logger.ets:154:22)
-└────────────────────────────────────────────────────────────────────────────────
+  # file: 20250406.log
+  # logger.info('Test logger.info...')
+  # logger.warn('Test logger.warn...')
+  # logger.warn(new Map([['name', '这是一个 Map 对象']]))
+  # ------------------------------------------------------
+  ┌────────────────────────────────────────────────────────────────────────────────
+  │ Info | 2025-04-06 14:58:59.810 (+00:00:25.276)
+  ├┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄
+  │ Test logger.info...
+  ├┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄
+  │ #0    at print (library/src/main/ets/service/printer.ets:235:45)
+  │ #1    at print (library/src/main/ets/service/printer.ets:269:12)
+  │ #2    at log (library/src/main/ets/abstract/logger.ets:114:22)
+  └────────────────────────────────────────────────────────────────────────────────
+  ┌────────────────────────────────────────────────────────────────────────────────
+  │ Warn | 2025-04-06 14:59:01.820 (+00:00:27.286)
+  ├┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄
+  │ Test logger.warn...
+  ├┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄
+  │ #0    at print (library/src/main/ets/service/printer.ets:235:45)
+  │ #1    at print (library/src/main/ets/service/printer.ets:269:12)
+  │ #2    at log (library/src/main/ets/abstract/logger.ets:114:22)
+  └────────────────────────────────────────────────────────────────────────────────
+  ┌────────────────────────────────────────────────────────────────────────────────
+  │ Warn | 2025-04-12 12:25:13.608 (+00:00:14.910)
+  ├┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄
+  │ {
+  │   "__type__": "Map",
+  │   "__entries__": [
+  │     [
+  │       "name",
+  │       "这是一个 Map 对象"
+  │     ]
+  │   ]
+  │ }
+  ├┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄
+  │ #0    at print (library/src/main/ets/service/printer.ets:259:45)
+  │ #1    at print (library/src/main/ets/service/printer.ets:293:12)
+  │ #2    at log (library/src/main/ets/abstract/logger.ets:154:22)
+  └────────────────────────────────────────────────────────────────────────────────
 ```
 
 <br/>
@@ -235,22 +239,22 @@ Logger 是一个简单、美观、实用的HarmonyOS应用程序日志框架...
   // TS 类型说明
 
   export interface IString {
-  content: string; // 文件内容
-  filename: string; // 文件名 如 '20250410.log'
-  type: string; // 文件类型 如 'text/plain'
+    content: string; // 文件内容
+    filename: string; // 文件名 如 '20250410.log'
+    type: string; // 文件类型 如 'text/plain'
   }
   
   export interface IArrayBuffer {
-  buffer: ArrayBuffer; // 文件内容 (字节)
-  filename: string; // 文件名 如 '20250410.log'
-  type: string; // 文件类型 如 'text/plain'
+    buffer: ArrayBuffer; // 文件内容 (字节)
+    filename: string; // 文件名 如 '20250410.log'
+    type: string; // 文件类型 如 'text/plain'
   }
   
   export interface IRequestFile {
-  name: string; // 文件名 (不含后缀) 如 '20250410'
-  filename: string; // 文件名 (含后缀) 如 '20250410.log'
-  uri: string; // 文件完整路径 如 context.filesDir + '/xxxx/20250410/.log'
-  type: string; // 文件后缀，如 'log'
+    name: string; // 文件名 (不含后缀) 如 '20250410'
+    filename: string; // 文件名 (含后缀) 如 '20250410.log'
+    uri: string; // 文件完整路径 如 context.filesDir + '/xxxx/20250410/.log'
+    type: string; // 文件后缀，如 'log'
   }
 ```
 
