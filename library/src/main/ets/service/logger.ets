@@ -3,7 +3,19 @@ import { SafeMultiOutput } from "../service/output";
 import { SafeWriteFileOutput } from "../service/output";
 
 export class SafeLogger extends Logger {
-  get writeFileOutput() {
+  public removeWriteListener(listener: VoidCallback) {
+    if (this.writeFileOutput?.changeNotifier.removeListener) {
+      this.writeFileOutput.changeNotifier.removeListener(listener)
+    }
+  }
+
+  public addWriteListener(listener: VoidCallback) {
+    if (this.writeFileOutput?.changeNotifier.addListener) {
+      this.writeFileOutput.changeNotifier.addListener(listener)
+    }
+  }
+
+  public get writeFileOutput() {
     if (this.output instanceof SafeWriteFileOutput) {
       return this.output
     }
@@ -13,22 +25,6 @@ export class SafeLogger extends Logger {
     }
 
     return null
-  }
-
-  get addWriteListener() {
-    return this.writeFileOutput?.changeNotifier.addListener ?? (() => {});
-  }
-
-  get removeWriteListener() {
-    return this.writeFileOutput?.changeNotifier.removeListener ?? (() => {});
-  }
-
-  async readAsRequestFile() {
-    try {
-      return this.writeFileOutput?.readAsRequestFile() ?? null;
-    } catch (e) {
-      return null;
-    }
   }
 
   async readAsRequestFiles() {
@@ -42,6 +38,14 @@ export class SafeLogger extends Logger {
   async readAsArrayBuffers() {
     try {
       return this.writeFileOutput?.readAsArrayBuffers() ?? null;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  async readAsRequestFile() {
+    try {
+      return this.writeFileOutput?.readAsRequestFile() ?? null;
     } catch (e) {
       return null;
     }

@@ -1,3 +1,28 @@
+### v1.2.7
+1. 修复 SafeLogger API bug
+
+   ```shell
+      - get addWriteListener() {
+      -   return this.writeFileOutput?.changeNotifier.addListener ?? (() => {});
+      - }
+      
+      - get removeWriteListener() {
+      -   return this.writeFileOutput?.changeNotifier.removeListener ?? (() => {});
+      - }
+   
+      + public removeWriteListener(listener: VoidCallback) {
+      +   if (this.writeFileOutput?.changeNotifier.removeListener) {
+      +     this.writeFileOutput.changeNotifier.removeListener(listener)
+      +   }
+      + }
+      
+      + public addWriteListener(listener: VoidCallback) {
+      +   if (this.writeFileOutput?.changeNotifier.addListener) {
+      +     this.writeFileOutput.changeNotifier.addListener(listener)
+      +   }
+      + }
+   ```
+
 ### v1.2.6
 1. 修复 SafeWriteFileOutput API bug
 

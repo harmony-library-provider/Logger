@@ -5,13 +5,13 @@
         "name": "default",
         "type": "HarmonyOS",
         "material": {
-          "certpath": "/Users/linpengteng/.ohos/config/default_harmony-logger_FN0s6MVsZ3Mbe1tocXQvn39uWrD2tZXNdeLb0pRoTyU=.cer",
+          "certpath": "/Users/linpengteng/.ohos/config/default_logger_8ETdVtaGNjno_W3sprBlT4b7vJRvQr70vIM-wGIxTYM=.cer",
           "keyAlias": "debugKey",
-          "keyPassword": "0000001BFDB9F3DD526885FC5346C04E38D78A9DCDDACB182043434F257BFD27227EA9BB560679BD66A715",
-          "profile": "/Users/linpengteng/.ohos/config/default_harmony-logger_FN0s6MVsZ3Mbe1tocXQvn39uWrD2tZXNdeLb0pRoTyU=.p7b",
+          "keyPassword": "0000001BE8AFFC818CFF47E1126ADE5330C27F78C9FB3612442E1E55B70C6581FDE5679776BA3BD01BD817",
+          "profile": "/Users/linpengteng/.ohos/config/default_logger_8ETdVtaGNjno_W3sprBlT4b7vJRvQr70vIM-wGIxTYM=.p7b",
           "signAlg": "SHA256withECDSA",
-          "storeFile": "/Users/linpengteng/.ohos/config/default_harmony-logger_FN0s6MVsZ3Mbe1tocXQvn39uWrD2tZXNdeLb0pRoTyU=.p12",
-          "storePassword": "0000001B25C9489BCF8CCF27B2AEC795544208207885CD0BCC6BDAA9AB52BD66CD41BDAF4A6F8DF6C463DC"
+          "storeFile": "/Users/linpengteng/.ohos/config/default_logger_8ETdVtaGNjno_W3sprBlT4b7vJRvQr70vIM-wGIxTYM=.p12",
+          "storePassword": "0000001B9DFE304455CBD4603756EA252AF060E0807107DF4E3CB505F2D8EA69C9F9FD570B277D41B2D6EB"
         }
       }
     ],
