@@ -1,4 +1,9 @@
+### v1.2.8
+
+1. 优化代码风格，消除 Code Linter Warning
+
 ### v1.2.7
+
 1. 修复 SafeLogger API bug
 
    ```shell
@@ -24,6 +29,7 @@
    ```
 
 ### v1.2.6
+
 1. 修复 SafeWriteFileOutput API bug
 
    ```shell
@@ -32,6 +38,7 @@
    ```
 
 ### v1.2.5
+
 1. 支持 Map 类型数据 Key 键值为非基本数据
 
    ```shell
@@ -57,6 +64,7 @@
    ```
 
 ### v1.2.4
+
 1. 规范 Map、Set 日志序列化输出
 
    ```shell
@@ -79,6 +87,7 @@
    ```
 
 ### v1.2.3
+
 1. 修复 Map 类型数据日志 bug, eg.
 
    ```shell
@@ -124,16 +133,15 @@
       └────────────────────────────────────────────────────────────────────────────────
    ```
 
-
 ### v1.2.1
 
 1. 调整 SafeWriteFileOutput fileFormatter 选项默认值
-   - change 'yyyyMMdd' to '[yyyyMMdd]'
+    - change 'yyyyMMdd' to '[yyyyMMdd]'
 
 ### v1.2.0
 
 1. 调整 compatibleSdkVersion: 5.0.0(12)
-   - 适配 API12 版本
+    - 适配 API12 版本
 
 ### v1.1.2
 

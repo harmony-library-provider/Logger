@@ -1,14 +1,14 @@
 export class AsyncMutex {
-  private locked: boolean = false;
-  private queues: Array<() => void> = [];
+  private locked: boolean = false
+  private queues: Array<() => void> = []
 
   public async synchronized<T = void>(fn: () => T | Promise<T>): Promise<T> {
-    await this.acquire();
+    await this.acquire()
 
     try {
-      return await fn();
+      return await fn()
     } finally {
-      this.release();
+      this.release()
     }
   }
 
@@ -16,15 +16,15 @@ export class AsyncMutex {
     return new Promise<void>((resolve) => {
       if (!this.locked) {
         this.locked = true
-        resolve();
+        resolve()
         return
       }
 
-      this.queues.push(resolve);
-    });
+      this.queues.push(resolve)
+    })
   }
 
   public release(): void {
-    this.queues.length > 0 ? this.queues.shift()?.() : this.locked = false;
+    this.queues.length > 0 ? this.queues.shift()?.() : this.locked = false
   }
 }

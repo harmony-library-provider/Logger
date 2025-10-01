@@ -1,11 +1,11 @@
-import { hilog } from "@kit.PerformanceAnalysisKit";
+import { hilog } from "@kit.PerformanceAnalysisKit"
 
 export class levels {
-  static info = hilog.LogLevel.INFO;
-  static warn = hilog.LogLevel.WARN;
-  static debug = hilog.LogLevel.DEBUG;
-  static error = hilog.LogLevel.ERROR;
-  static fatal = hilog.LogLevel.FATAL;
+  static info = hilog.LogLevel.INFO
+  static warn = hilog.LogLevel.WARN
+  static debug = hilog.LogLevel.DEBUG
+  static error = hilog.LogLevel.ERROR
+  static fatal = hilog.LogLevel.FATAL
 
   static proxy(level: hilog.LogLevel) {
     switch (level) {

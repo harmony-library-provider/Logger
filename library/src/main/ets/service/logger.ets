@@ -1,6 +1,6 @@
-import { Logger } from "../abstract/logger";
-import { SafeMultiOutput } from "../service/output";
-import { SafeWriteFileOutput } from "../service/output";
+import { Logger } from "../abstract/logger"
+import { SafeMultiOutput } from "../service/output"
+import { SafeWriteFileOutput } from "../service/output"
 
 export class SafeLogger extends Logger {
   public removeWriteListener(listener: VoidCallback) {
@@ -29,71 +29,74 @@ export class SafeLogger extends Logger {
 
   async readAsRequestFiles() {
     try {
-      return this.writeFileOutput?.readAsRequestFiles() ?? null;
+      return this.writeFileOutput?.readAsRequestFiles() ?? null
     } catch (e) {
-      return null;
+      return null
     }
   }
 
   async readAsArrayBuffers() {
     try {
-      return this.writeFileOutput?.readAsArrayBuffers() ?? null;
+      return this.writeFileOutput?.readAsArrayBuffers() ?? null
     } catch (e) {
-      return null;
+      return null
     }
   }
 
   async readAsRequestFile() {
     try {
-      return this.writeFileOutput?.readAsRequestFile() ?? null;
+      return this.writeFileOutput?.readAsRequestFile() ?? null
     } catch (e) {
-      return null;
+      return null
     }
   }
 
   async readAsArrayBuffer() {
     try {
-      return this.writeFileOutput?.readAsArrayBuffer() ?? null;;
+      return this.writeFileOutput?.readAsArrayBuffer() ?? null;
+      ;
     } catch (e) {
-      return null;
+      return null
     }
   }
 
   async readAsStrings() {
     try {
-      return this.writeFileOutput?.readAsStrings() ?? null;;
+      return this.writeFileOutput?.readAsStrings() ?? null;
+      ;
     } catch (e) {
-      return null;
+      return null
     }
   }
 
   async readAsString() {
     try {
-      return this.writeFileOutput?.readAsString() ?? null;;
+      return this.writeFileOutput?.readAsString() ?? null;
+      ;
     } catch (e) {
-      return null;
+      return null
     }
   }
 
   async clearHistory() {
     try {
-      return this.writeFileOutput?.clearHistory();
+      return this.writeFileOutput?.clearHistory()
     } catch (e) {
-      return;
+      return
     }
   }
 
   async clearAll() {
     try {
-      return this.writeFileOutput?.clearAll();
+      return this.writeFileOutput?.clearAll()
     } catch (e) {
-      return;
+      return
     }
   }
 
   async isEmpty() {
     try {
-      return this.writeFileOutput?.isEmpty() ?? true;
+      return this.writeFileOutput?.isEmpty() ?? true
     } catch (e) {
       return true
     }

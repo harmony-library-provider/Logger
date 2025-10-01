@@ -1,5 +1,5 @@
-import { hilog } from "@kit.PerformanceAnalysisKit";
-import { LogEvent } from "../abstract/output";
+import { hilog } from "@kit.PerformanceAnalysisKit"
+import { LogEvent } from "../abstract/output"
 
 export abstract class Filter {
   public level: hilog.LogLevel = hilog.LogLevel.DEBUG

@@ -1,49 +1,49 @@
 import { levels } from '../service/level'
-import { Printer } from '../abstract/printer';
-import { LogEvent } from "../abstract/output";
-import { hilog } from "@kit.PerformanceAnalysisKit";
-import { IFormatOptions } from '../abstract/printer';
+import { Printer } from '../abstract/printer'
+import { LogEvent } from "../abstract/output"
+import { hilog } from "@kit.PerformanceAnalysisKit"
+import { IFormatOptions } from '../abstract/printer'
 
 export interface ISafePrettyPrinter {
-  excludeBox?: Map<hilog.LogLevel, boolean>;
-  includeBox?: Map<hilog.LogLevel, boolean>;
-  stackTraceBeginIndex?: number;
-  noBoxingByDefault?: boolean;
-  errorMethodCount?: number;
-  methodCount?: number;
-  lineLength?: number;
-  minifyCode?: boolean;
-  printTime?: boolean;
+  excludeBox?: Map<hilog.LogLevel, boolean>
+  includeBox?: Map<hilog.LogLevel, boolean>
+  stackTraceBeginIndex?: number
+  noBoxingByDefault?: boolean
+  errorMethodCount?: number
+  methodCount?: number
+  lineLength?: number
+  minifyCode?: boolean
+  printTime?: boolean
 }
 
 export interface ISafeHybridPrinter {
-  info?: Printer;
-  warn?: Printer;
-  debug?: Printer;
-  error?: Printer;
-  fatal?: Printer;
+  info?: Printer
+  warn?: Printer
+  debug?: Printer
+  error?: Printer
+  fatal?: Printer
 }
 
 export class SafePrettyPrinter extends Printer {
-  static readonly middleCorner = '├';
-  static readonly singleDivider = '┄';
-  static readonly doubleDivider = '─';
-  static readonly topLeftCorner = '┌';
-  static readonly verticalCorner = '│';
-  static readonly bottomLeftCorner = '└';
-  static readonly startDate = new Date();
-  includeBox: Map<hilog.LogLevel, boolean> = new Map();
-  excludeBox: Map<hilog.LogLevel, boolean> = new Map();
+  static readonly middleCorner = '├'
+  static readonly singleDivider = '┄'
+  static readonly doubleDivider = '─'
+  static readonly topLeftCorner = '┌'
+  static readonly verticalCorner = '│'
+  static readonly bottomLeftCorner = '└'
+  static readonly startDate = new Date()
+  includeBox: Map<hilog.LogLevel, boolean> = new Map()
+  excludeBox: Map<hilog.LogLevel, boolean> = new Map()
   stackTraceBeginIndex: number = 0
   noBoxingByDefault: boolean = false
   errorMethodCount: number = 10
-  methodCount: number = 5;
-  lineLength: number = 80;
+  methodCount: number = 5
+  lineLength: number = 80
   printTime: boolean = true
   minifyCode: boolean = false
-  _bottomBorder: string = '';
-  _middleBorder: string = '';
-  _topBorder: string = '';
+  _bottomBorder: string = ''
+  _middleBorder: string = ''
+  _topBorder: string = ''
 
   constructor(options: ISafePrettyPrinter = {}) {
     super()
@@ -59,9 +59,9 @@ export class SafePrettyPrinter extends Printer {
     const singleDivider = SafePrettyPrinter.singleDivider.repeat(this.lineLength)
     const doubleDivider = SafePrettyPrinter.doubleDivider.repeat(this.lineLength)
 
-    this._bottomBorder = `${SafePrettyPrinter.bottomLeftCorner}${doubleDivider}`;
-    this._middleBorder = `${SafePrettyPrinter.middleCorner}${singleDivider}`;
-    this._topBorder = `${SafePrettyPrinter.topLeftCorner}${doubleDivider}`;
+    this._bottomBorder = `${SafePrettyPrinter.bottomLeftCorner}${doubleDivider}`
+    this._middleBorder = `${SafePrettyPrinter.middleCorner}${singleDivider}`
+    this._topBorder = `${SafePrettyPrinter.topLeftCorner}${doubleDivider}`
 
     if (SafePrettyPrinter.startDate.getTime() > 0) {
     }
@@ -76,7 +76,7 @@ export class SafePrettyPrinter extends Printer {
         const state = ref[1]
 
         if (levels.check(key)) {
-          this.includeBox[key] = !!state;
+          this.includeBox[key] = !!state
         }
       }
     }
@@ -87,47 +87,47 @@ export class SafePrettyPrinter extends Printer {
         const state = ref[1]
 
         if (levels.check(key)) {
-          this.includeBox[key] = !state;
+          this.includeBox[key] = !state
         }
       }
     }
   }
 
   discardStacktrace(line?: string | undefined | null): boolean {
-    return !line;
+    return !line
   }
 
   formatStackTrace(stack: Object | null, methodCount: number): string | null {
-    const lines = stack?.toString().split('\n') ?? [];
-    const traces = [...lines.filter((line) => !this.discardStacktrace(line))];
-    const formatted: string[] = [];
+    const lines = stack?.toString().split('\n') ?? []
+    const traces = [...lines.filter((line) => !this.discardStacktrace(line))]
+    const formatted: string[] = []
 
     for (let count = 0; count < Math.min(traces.length, methodCount); count++) {
-      const line = traces[count];
+      const line = traces[count]
 
       if (count < this.stackTraceBeginIndex) {
-        continue;
+        continue
       }
 
       if (!new RegExp('^\\S+').test(line)) {
-        formatted.push(`#${count}${line.replace(/^#\d+\s+/, '')}`);
+        formatted.push(`#${count}${line.replace(/^#\d+\s+/, '')}`)
       }
 
       if (new RegExp('^\\S+').test(line)) {
-        formatted.push(`#${count} ${line.replace(/^#\d+\s+/, '')}`);
+        formatted.push(`#${count} ${line.replace(/^#\d+\s+/, '')}`)
       }
     }
 
     if (formatted.length > 0) {
-      return formatted.join('\n');
+      return formatted.join('\n')
     }
 
-    return null;
+    return null
   }
 
   formatSerialize(message?: Object): Object | undefined | null {
     if (message instanceof Set) {
-      return Object({ __type__: 'Set', __values__:  Array.from(message) })
+      return Object({ __type__: 'Set', __values__: Array.from(message) })
     }
 
     if (message instanceof Map) {
@@ -141,7 +141,7 @@ export class SafePrettyPrinter extends Printer {
     const replacer = (_: string, v: object) => this.formatSerialize(v)
 
     if (message === undefined || message === null) {
-      return null;
+      return null
     }
 
     if (typeof message === 'function') {
@@ -157,22 +157,22 @@ export class SafePrettyPrinter extends Printer {
     }
 
     if (typeof message === 'object') {
-      return JSON.stringify(message, replacer, !this.minifyCode ? 2 : undefined)
+      return JSON.stringify(message, replacer,!this.minifyCode ? 2 : undefined)
     }
 
-    return null;
+    return null
   }
 
   formatError(error?: Object): string | null {
     if (error != undefined && error != null) {
-      return error.toString();
+      return error.toString()
     }
 
-    return null;
+    return null
   }
 
   formater(options: IFormatOptions) {
-    let border = false;
+    let border = false
 
     const time = options.time
     const level = options.level
@@ -180,87 +180,87 @@ export class SafePrettyPrinter extends Printer {
     const error = options.error
     const message = options.message
 
-    const verticalLine: string = this.includeBox[level] == true ? `${SafePrettyPrinter.verticalCorner} ` : '';
-    const included: boolean = this.includeBox[level] == true;
-    const buffer: string[] = [];
+    const verticalLine: string = this.includeBox[level] == true ? `${SafePrettyPrinter.verticalCorner} ` : ''
+    const included: boolean = this.includeBox[level] == true
+    const buffer: string[] = []
 
     if (included) {
-      buffer.push(this._topBorder);
+      buffer.push(this._topBorder)
     }
 
     if (time != null) {
-      buffer.push(`${verticalLine}${levels.label(level)} | ${time}`);
-      border = true;
+      buffer.push(`${verticalLine}${levels.label(level)} | ${time}`)
+      border = true
     }
 
     if (!!message) {
       if (border && included) {
-        buffer.push(this._middleBorder);
+        buffer.push(this._middleBorder)
       }
 
       for (const line of message.split('\n')) {
-        buffer.push(`${verticalLine}${line}`);
+        buffer.push(`${verticalLine}${line}`)
       }
 
-      border = true;
+      border = true
     }
 
     if (!!error) {
       if (border && included) {
-        buffer.push(this._middleBorder);
+        buffer.push(this._middleBorder)
       }
 
       for (const line of error.split('\n')) {
-        buffer.push(`${verticalLine}${line}`);
+        buffer.push(`${verticalLine}${line}`)
       }
 
-      border = false;
+      border = false
     }
 
     if (!!stack) {
       if (border && included) {
-        buffer.push(this._middleBorder);
+        buffer.push(this._middleBorder)
       }
 
       for (const line of stack.split('\n')) {
-        buffer.push(`${verticalLine}${line}`);
+        buffer.push(`${verticalLine}${line}`)
       }
 
-      border = true;
+      border = true
     }
 
     if (included) {
-      buffer.push(this._bottomBorder);
+      buffer.push(this._bottomBorder)
     }
 
     if (buffer) {
       buffer.push('')
     }
 
-    return buffer;
+    return buffer
   }
 
   print(origin: LogEvent) {
-    let timeStr: string | null = null;
-    let stackTraceStr: string | null = null;
+    let timeStr: string | null = null
+    let stackTraceStr: string | null = null
 
-    const level = origin.level;
-    const isError = level == levels.error;
-    const errorStr = this.formatError(origin.error);
-    const messageStr = this.formatMessage(origin.message);
+    const level = origin.level
+    const isError = level == levels.error
+    const errorStr = this.formatError(origin.error)
+    const messageStr = this.formatMessage(origin.message)
 
     if (origin.stack != null) {
-      const count = Math.max(isError ? this.errorMethodCount : this.methodCount, 1);
-      stackTraceStr = this.formatStackTrace(origin.stack ?? null, count);
+      const count = Math.max(isError ? this.errorMethodCount : this.methodCount, 1)
+      stackTraceStr = this.formatStackTrace(origin.stack ?? null, count)
     }
 
     if (origin.stack == null) {
-      const count = Math.max(isError ? this.errorMethodCount : this.methodCount, 1);
-      stackTraceStr = this.formatStackTrace(new Error().stack ?? null, count);
+      const count = Math.max(isError ? this.errorMethodCount : this.methodCount, 1)
+      stackTraceStr = this.formatStackTrace(new Error().stack ?? null, count)
     }
 
     if (this.printTime == true) {
-      timeStr = SafeDateTimeFormat.dateTimeAndSinceStart(origin.time);
+      timeStr = SafeDateTimeFormat.dateTimeAndSinceStart(origin.time)
     }
 
     const result = this.formater({
@@ -269,14 +269,14 @@ export class SafePrettyPrinter extends Printer {
       error: errorStr ?? undefined,
       time: timeStr ?? undefined,
       level: level,
-    });
+    })
 
-    return result;
+    return result
   }
 }
 
 export class SafeHybridPrinter extends Printer {
-  printerMap: Map<hilog.LogLevel, Printer> = new Map();
+  printerMap: Map<hilog.LogLevel, Printer> = new Map()
 
   constructor(printer: Printer, options: ISafeHybridPrinter = {}) {
     super()
@@ -313,29 +313,29 @@ export class SafeSimplePrinter extends Printer {
 
 export class SafeDateTimeFormat {
   static dateTimeAndSinceStart(t?: Date): string {
-    const now = t ?? new Date();
+    const now = t ?? new Date()
     const onlyDate = SafeDateTimeFormat.onlyDate
     const onlyTime = SafeDateTimeFormat.onlyTime
     const onlySinceStart = SafeDateTimeFormat.onlySinceStart
-    return `${onlyDate(now)} ${onlyTime(now)} (+${onlySinceStart(now)})`;
+    return `${onlyDate(now)} ${onlyTime(now)} (+${onlySinceStart(now)})`
   }
 
   static onlyDateAndSinceStart(t?: Date): string {
-    const now = t ?? new Date();
+    const now = t ?? new Date()
     const onlyDate = SafeDateTimeFormat.onlyDate
     const onlySinceStart = SafeDateTimeFormat.onlySinceStart
-    return `${onlyDate(now)} (+${onlySinceStart(now)})`;
+    return `${onlyDate(now)} (+${onlySinceStart(now)})`
   }
 
   static onlyTimeAndSinceStart(t?: Date): string {
-    const now = t ?? new Date();
+    const now = t ?? new Date()
     const onlyTime = SafeDateTimeFormat.onlyTime
     const onlySinceStart = SafeDateTimeFormat.onlySinceStart
-    return `${onlyTime(now)} (+${onlySinceStart(now)})`;
+    return `${onlyTime(now)} (+${onlySinceStart(now)})`
   }
 
   static onlySinceStart(t?: Date): string {
-    const now = t?.getTime() ?? Date.now();
+    const now = t?.getTime() ?? Date.now()
     const start = SafePrettyPrinter.startDate.getTime()
     const padStart = (num: number, length: number = 2) => `${num}`.padStart(length, '0')
 
@@ -343,52 +343,52 @@ export class SafeDateTimeFormat {
       return '00:00:00.000'
     }
 
-    const totalMs = now - start;
-    const totalSeconds = Math.floor(totalMs / 1000);
-    const totalMinutes = Math.floor(totalSeconds / 60);
-    const hours = padStart(Math.floor(totalMinutes / 60), 2);
-    const minutes = padStart(totalMinutes % 60, 2);
-    const seconds = padStart(totalSeconds % 60, 2);
-    const millis = padStart(totalMs % 1000, 3);
+    const totalMs = now - start
+    const totalSeconds = Math.floor(totalMs / 1000)
+    const totalMinutes = Math.floor(totalSeconds / 60)
+    const hours = padStart(Math.floor(totalMinutes / 60), 2)
+    const minutes = padStart(totalMinutes % 60, 2)
+    const seconds = padStart(totalSeconds % 60, 2)
+    const millis = padStart(totalMs % 1000, 3)
 
-    return `${hours}:${minutes}:${seconds}.${millis}`;
+    return `${hours}:${minutes}:${seconds}.${millis}`
   }
 
   static dateAndTime(t?: Date): string {
-    const now = t ?? new Date();
+    const now = t ?? new Date()
     const onlyDate = SafeDateTimeFormat.onlyDate
     const onlyTime = SafeDateTimeFormat.onlyTime
-    return `${onlyDate(now)} ${onlyTime(now)}`;
+    return `${onlyDate(now)} ${onlyTime(now)}`
   }
 
   static onlyDate(t?: Date): string {
-    const now = t ?? new Date();
+    const now = t ?? new Date()
     const isoDate = now.toISOString()
-    return isoDate.substring(0, isoDate.indexOf("T"));
+    return isoDate.substring(0, isoDate.indexOf("T"))
   }
 
   static onlyTime(t?: Date): string {
-    const now = t ?? new Date();
+    const now = t ?? new Date()
 
     const twoDigits = (n: number) => {
-      return n >= 10 ? `${n}` : `0${n}`;
+      return n >= 10 ? `${n}` : `0${n}`
     }
 
     const threeDigits = (n: number) => {
       if (n >= 100) {
-        return `${n}`;
+        return `${n}`
       }
       if (n >= 10) {
-        return `0${n}`;
+        return `0${n}`
       }
-      return `00${n}`;
+      return `00${n}`
     }
 
-    const hour = twoDigits(now.getHours());
-    const min = twoDigits(now.getMinutes());
-    const sec = twoDigits(now.getSeconds());
-    const ms = threeDigits(now.getMilliseconds());
+    const hour = twoDigits(now.getHours())
+    const min = twoDigits(now.getMinutes())
+    const sec = twoDigits(now.getSeconds())
+    const ms = threeDigits(now.getMilliseconds())
 
-    return `${hour}:${min}:${sec}.${ms}`;
+    return `${hour}:${min}:${sec}.${ms}`
   }
 }

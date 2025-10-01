@@ -1,35 +1,35 @@
-import { Output } from "../abstract/output";
-import { Filter } from "../abstract/filter";
-import { Printer } from "../abstract/printer";
-import { LogEvent } from "../abstract/output";
-import { ILogEvent } from "../abstract/output";
-import { OutputEvent } from "../abstract/output";
-import { hilog } from "@kit.PerformanceAnalysisKit";
+import { Output } from "../abstract/output"
+import { Filter } from "../abstract/filter"
+import { Printer } from "../abstract/printer"
+import { LogEvent } from "../abstract/output"
+import { ILogEvent } from "../abstract/output"
+import { OutputEvent } from "../abstract/output"
+import { hilog } from "@kit.PerformanceAnalysisKit"
 
 export type OutputCallback = (event: OutputEvent) => void
 
 export type LogCallback = (event: LogEvent) => void
 
 export abstract class Logger {
-  private isReady: Promise<void>;
-  private active: boolean = false;
-  public printer: Printer;
-  public output: Output;
-  public filter: Filter;
+  private isReady: Promise<void>
+  private active: boolean = false
+  public printer: Printer
+  public output: Output
+  public filter: Filter
 
   async init() {
     return this.isReady
   }
 
   async close() {
-    this.active = false;
-    await this.output.destroy();
-    await this.filter.destroy();
-    await this.printer.destroy();
+    this.active = false
+    await this.output.destroy()
+    await this.filter.destroy()
+    await this.printer.destroy()
   }
 
   public isClosed() {
-    return !this.active;
+    return !this.active
   }
 
   constructor(options: ILogger) {
@@ -139,7 +139,7 @@ export abstract class Logger {
     await this.init()
 
     if (!this.active) {
-      throw new Error('Logger has already been closed.');
+      throw new Error('Logger has already been closed.')
     }
 
     const logEvent = new LogEvent({
@@ -148,19 +148,19 @@ export abstract class Logger {
       message: options.message,
       error: options.error,
       stack: options.stack,
-    });
+    })
 
     if (this.filter.should(logEvent)) {
-      const output = this.printer.print(logEvent);
+      const output = this.printer.print(logEvent)
 
       if (output.length > 0) {
         const outputEvent = new OutputEvent(
           logEvent,
           output
-        );
+        )
 
         try {
-          this.output.output(outputEvent);
+          this.output.output(outputEvent)
         } catch (e) {
           /* e */
         }

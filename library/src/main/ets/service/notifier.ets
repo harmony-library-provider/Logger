@@ -1,7 +1,7 @@
-import { ChangeNotifier } from "../abstract/notifier";
+import { ChangeNotifier } from "../abstract/notifier"
 
 export class SafeChangeNotifier extends ChangeNotifier {
   public notifyListeners() {
-    super.notifyListeners();
+    super.notifyListeners()
   }
 }

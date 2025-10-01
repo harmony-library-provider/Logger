@@ -1,12 +1,12 @@
-import { hilog } from "@kit.PerformanceAnalysisKit";
-import { LogEvent } from "../abstract/output";
+import { hilog } from "@kit.PerformanceAnalysisKit"
+import { LogEvent } from "../abstract/output"
 
 export interface IFormatOptions {
-  level: hilog.LogLevel;
-  message?: string;
-  stack?: string;
-  error?: string;
-  time?: string;
+  level: hilog.LogLevel
+  message?: string
+  stack?: string
+  error?: string
+  time?: string
 }
 
 export abstract class Printer {

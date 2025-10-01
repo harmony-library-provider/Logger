@@ -1,4 +1,4 @@
-import { hilog } from "@kit.PerformanceAnalysisKit";
+import { hilog } from "@kit.PerformanceAnalysisKit"
 
 export abstract class Output {
   async init(): Promise<void> {
@@ -13,33 +13,33 @@ export abstract class Output {
 }
 
 export interface ILogEvent {
-  time: Date;
-  level: hilog.LogLevel;
-  message?: Object;
-  error?: Object;
-  stack?: Object;
+  time: Date
+  level: hilog.LogLevel
+  message?: Object
+  error?: Object
+  stack?: Object
 }
 
 export class OutputEvent {
-  lines: string[];
-  origin: LogEvent;
+  lines: string[]
+  origin: LogEvent
 
   public get level() {
-    return this.origin.level;
+    return this.origin.level
   }
 
   constructor(origin: LogEvent, lines: string[]) {
     this.origin = origin
     this.lines = lines
-  };
+  }
 }
 
 export class LogEvent {
-  time: Date;
-  level: hilog.LogLevel = hilog.LogLevel.DEBUG;
-  message?: Object;
-  error?: Object;
-  stack?: Object;
+  time: Date
+  level: hilog.LogLevel = hilog.LogLevel.DEBUG
+  message?: Object
+  error?: Object
+  stack?: Object
 
   constructor(options: ILogEvent) {
     this.time = options.time

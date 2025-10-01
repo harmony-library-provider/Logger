@@ -1,6 +1,6 @@
-import { Filter } from '../abstract/filter';
-import { LogEvent } from '../abstract/output';
-import { hilog } from '@kit.PerformanceAnalysisKit';
+import { Filter } from '../abstract/filter'
+import { LogEvent } from '../abstract/output'
+import { hilog } from '@kit.PerformanceAnalysisKit'
 
 export interface ISafeFilter {
   level?: hilog.LogLevel
@@ -15,6 +15,6 @@ export class SafeFilter extends Filter {
   }
 
   should(event: LogEvent) {
-    return event.level >= this.level;
+    return event.level >= this.level
   }
 }
